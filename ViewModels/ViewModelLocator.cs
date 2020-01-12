@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WPF.Locator
+namespace ViewModels
 {
-    class ViewModelLocator
+    public class ViewModelLocator
     {
         public ViewModelLocator()
         {
