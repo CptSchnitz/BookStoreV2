@@ -4,9 +4,31 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
+        Title="Book Store" Height="450" Width="800"
+        DataContext="{Binding Main ,Source={StaticResource Locator}}">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Book">
+                <MenuItem Header="All Books" Command="{Binding BookListNavCommand}"/>
+                <MenuItem Header="New Book" Command="{Binding BookEditNavCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Journal">
+                <MenuItem Header="All Journals" Command="{Binding JournalListNavCommand}"/>
+                <MenuItem Header="New Journal" Command="{Binding JournalEditNavCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Genres" Command="{Binding GenreNavCommand}"/>
+            <MenuItem Header="Authors" Command="{Binding AuthorNavCommand}"/>
+            <MenuItem Header="Publishers" Command="{Binding PublisherNavCommand}"/>
+            <MenuItem Header="Logs" Command="{Binding OpenLogFolderCommand}"/>
+        </Menu>
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Loaded">
+                    <i:InvokeCommandAction Command="{Binding BookListNavCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Frame>
+    </DockPanel>
 </Window>
