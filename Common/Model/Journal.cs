@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Common.Model
+﻿namespace Common.Model
 {
-    public class Journal
+    public class Journal : AbstractItem
     {
         public string Issn { get; set; }
     }
