@@ -1,6 +1,10 @@
 ﻿using CommonServiceLocator;
 using DAL;
+using DAL.BookStoreRepository;
+using DAL.EfBookStoreRepository;
 using GalaSoft.MvvmLight.Ioc;
+using Logic.API;
+using Logic.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Serilog;
@@ -64,6 +68,25 @@ namespace WPF
         private void ConfigureServices()
         {
             SimpleIoc.Default.Register<IMessageBoxService, WpfMessageBoxService>();
+
+            SimpleIoc.Default.Register<IGenreService, GenreService>();
+            SimpleIoc.Default.Register<IGenreRepository, EfGenreRepository>();
+
+            SimpleIoc.Default.Register<IPublisherService, PublisherService>();
+            SimpleIoc.Default.Register<IPublisherRepository, EfPublisherRepository>();
+
+            SimpleIoc.Default.Register<IAuthorService, AuthorService>();
+            SimpleIoc.Default.Register<IAuthorRepository, EfAuthorRepository>();
+
+            SimpleIoc.Default.Register<IItemService, ItemService>();
+            SimpleIoc.Default.Register<IItemRepository, EfItemRepository>();
+
+            SimpleIoc.Default.Register<IJournalService, JournalService>();
+            SimpleIoc.Default.Register<IJournalRepository, EfJournalRepository>();
+
+            SimpleIoc.Default.Register<IBookService, BookService>();
+            SimpleIoc.Default.Register<IBookRepository, EfBookRepository>();
+
         }
     }
 }

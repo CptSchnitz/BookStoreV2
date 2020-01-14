@@ -10,14 +10,11 @@
       Title="PublisherPage">
 
     <Grid>
-        <TabControl>
-            <TabItem Header="List">
-                <uc:PublisherList/>
-            </TabItem>
-            <TabItem Header="New Publisher">
-                <uc:PublisherForm/>
-            </TabItem>
-        </TabControl>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <uc:PublisherList/>
+        <uc:PublisherForm Grid.Column="1"/>
     </Grid>
 </Page>

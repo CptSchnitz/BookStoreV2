@@ -29,18 +29,18 @@ namespace ViewModels
         private bool CheckIfModelValid()
         {
             var results = new List<ValidationResult>(1);
-            //foreach (var prop in PropertiesWithValidators)
-            //{
-            //    var value = GetValue(prop);
-            //    if (!Validator.TryValidateProperty(value, new ValidationContext(this, null, null)
-            //    {
-            //        MemberName = prop
-            //    }))
-            //    {
-            //        return false;
-            //    }
-            //}
-            return Validator.TryValidateObject(this, new ValidationContext(this, null, null) { }, results);
+            foreach (var prop in PropertiesWithValidators)
+            {
+                var value = GetValue(prop);
+                if (!Validator.TryValidateProperty(value, new ValidationContext(this, null, null)
+                {
+                    MemberName = prop
+                }, results))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         string IDataErrorInfo.Error
         {

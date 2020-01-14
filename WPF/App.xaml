@@ -4,21 +4,19 @@
              xmlns:local="clr-namespace:WPF"      
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <vm:ViewModelLocator x:Key="Locator" xmlns:vm="clr-namespace:ViewModels;assembly=ViewModels"/>
-        <ControlTemplate x:Key="ValidationTemplate">
-            <DockPanel>
-                <AdornedElementPlaceholder/>
-                <TextBlock Foreground="Red" FontSize="20">!</TextBlock>
-            </DockPanel>
-        </ControlTemplate>
-        <Style x:Key="TextBoxInError" TargetType="{x:Type TextBox}">
-            <Style.Triggers>
-                <Trigger Property="Validation.HasError" Value="true">
-                    <Setter Property="ToolTip"
-              Value="{Binding RelativeSource={x:Static RelativeSource.Self},
-                              Path=(Validation.Errors)[0].ErrorContent}"/>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+        <ResourceDictionary>
+            <Style TargetType="DataGrid">
+                <Setter Property="IsReadOnly" Value="true"/>
+                <Setter Property="CanUserReorderColumns" Value="false"/>
+                <Setter Property="CanUserResizeColumns" Value="false"/>
+                <Setter Property="CanUserSortColumns" Value="False"/>
+            </Style>
+            <vm:ViewModelLocator x:Key="Locator" xmlns:vm="clr-namespace:ViewModels;assembly=ViewModels"/>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/WPF.Common;component/Converters/Converters.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WPF.Common;component/ErrorHandling.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

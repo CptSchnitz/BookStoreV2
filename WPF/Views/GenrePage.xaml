@@ -8,16 +8,14 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="GenrePage">
-
     <Grid>
-        <TabControl>
-            <TabItem Header="List">
-                <uc:GenreList/>
-            </TabItem>
-            <TabItem Header="New Genre">
-                <uc:GenreForm/>
-            </TabItem>
-        </TabControl>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-    </Grid>
+            <uc:GenreList Grid.Column="0"/>
+            <uc:GenreForm Grid.Column="1"/>
+
+        </Grid>
 </Page>

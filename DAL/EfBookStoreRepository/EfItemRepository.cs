@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DAL.EfBookStoreRepository
 {
-    class EfItemRepository : IItemRepository
+    public class EfItemRepository : IItemRepository
     {
         private readonly StoreContext context;
         public EfItemRepository(StoreContext context)

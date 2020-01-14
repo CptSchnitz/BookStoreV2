@@ -26,7 +26,7 @@
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Loaded">
-                    <i:InvokeCommandAction Command="{Binding BookListNavCommand}"/>
+                    <i:InvokeCommandAction Command="{Binding HomeNavCommand}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Frame>

@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL.EfJournalStoreRepository
+namespace DAL.EfBookStoreRepository
 {
-    class EfJournalRepository : IJournalRepository 
+    public class EfJournalRepository : IJournalRepository 
     {
         private readonly StoreContext context;
         public EfJournalRepository(StoreContext context)

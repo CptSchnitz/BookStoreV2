@@ -11,13 +11,12 @@
       >
 
     <Grid>
-        <TabControl>
-            <TabItem Header="List">
-                <uc:AuthorList/>
-            </TabItem>
-            <TabItem Header="New Author">
-                <uc:AuthorForm/>
-            </TabItem>
-        </TabControl>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <uc:AuthorList/>
+        <uc:AuthorForm Grid.Column="1"/>
     </Grid>
 </Page>
