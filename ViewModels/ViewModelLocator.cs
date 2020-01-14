@@ -13,6 +13,8 @@ namespace ViewModels
             SimpleIoc.Default.Register<AuthorFormViewModel>();
             SimpleIoc.Default.Register<PublisherListViewModel>();
             SimpleIoc.Default.Register<PublisherFormViewModel>();
+            SimpleIoc.Default.Register<BookPageViewModel>();
+            SimpleIoc.Default.Register<BookListViewModel>();
         }
 
         public MainWindowViewModel Main => SimpleIoc.Default.GetInstance<MainWindowViewModel>();
@@ -22,5 +24,7 @@ namespace ViewModels
         public AuthorFormViewModel AuthorForm => SimpleIoc.Default.GetInstance<AuthorFormViewModel>();
         public PublisherListViewModel PublisherList => SimpleIoc.Default.GetInstance<PublisherListViewModel>();
         public PublisherFormViewModel PublisherForm => SimpleIoc.Default.GetInstance<PublisherFormViewModel>();
+        public BookPageViewModel BookPage => SimpleIoc.Default.GetInstance<BookPageViewModel>();
+        public BookListViewModel BookList => SimpleIoc.Default.GetInstance<BookListViewModel>();
     }
 }

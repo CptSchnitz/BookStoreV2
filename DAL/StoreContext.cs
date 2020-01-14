@@ -69,7 +69,8 @@ namespace DAL
                     Price = 40,
                     PublishDate = DateTime.Now,
                     PublisherId = 1,
-                    Title = "journal"
+                    Title = "journal",
+                    IssueNum = 1
                 });
             modelBuilder.Entity<ItemGenre>().HasData(
                 new ItemGenre { AbstractItemId = 1, GenreId = 1 },
