@@ -4,6 +4,7 @@ using Logic.API;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,7 @@ namespace Logic.Services
                 var newBook = await bookRepository.CreateBookAsync(book);
                 return newBook;
             }
-            catch (Exception e)
+            catch (DataException e)
             {
                 logger.Error(e, "Error Adding new book");
                 throw new Exception("Error Adding book to db");
@@ -39,7 +40,7 @@ namespace Logic.Services
                 var bookList = await bookRepository.GetBooksAsync();
                 return bookList.ToList();
             }
-            catch (Exception e)
+            catch (DataException e)
             {
                 logger.Error(e, "Error getting books");
                 throw new Exception("Error getting books from db");
@@ -53,7 +54,7 @@ namespace Logic.Services
                 var newBook = await bookRepository.EditBookAsync(book);
                 return newBook;
             }
-            catch (Exception e)
+            catch (DataException e)
             {
                 logger.Error(e, "Error Updating book");
                 throw new Exception("Error Updating book");

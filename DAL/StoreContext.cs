@@ -37,7 +37,11 @@ namespace DAL
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<ItemGenre> ItemGenres { get; set; }
-
+        public DbSet<BaseDiscount> Discounts { get; set; }
+        public DbSet<PublisherDiscount> PubDiscounts { get; set; }
+        public DbSet<GenreDiscount> GenreDiscounts { get; set; }
+        public DbSet<AuthorDiscount> AuthorDiscounts { get; set; }
+        public DbSet<PublishDateDiscount> DateDiscount { get; set; }
 
         private void SeedData(ModelBuilder modelBuilder)
         {

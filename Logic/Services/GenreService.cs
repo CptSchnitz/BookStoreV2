@@ -4,6 +4,7 @@ using Logic.API;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,7 @@ namespace Logic.Services
                 var newGenre = await genreRepository.CreateGenreAsync(genre);
                 return newGenre;
             }
-            catch (Exception e)
+            catch (DataException e)
             {
                 logger.Error(e, "Error Adding new Genre");
                 throw new Exception("Error Adding genre to db");
@@ -39,7 +40,7 @@ namespace Logic.Services
                 var genreList = (await genreRepository.GetGenresAsync()).ToList();
                 return genreList;
             }
-            catch(Exception e)
+            catch(DataException e)
             {
                 logger.Error(e, "Error loading Genres");
                 throw new Exception("Error getting data from db");

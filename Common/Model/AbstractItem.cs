@@ -9,6 +9,9 @@ namespace Common.Model
         public int Id { get; set; }
         public string Title { get; set; }
         public decimal Price { get; set; }
+
+        [NotMapped]
+        public decimal DiscountedPrice { get; set; }
         public DateTime PublishDate { get; set; }
 
         [ForeignKey(nameof(Publisher))]
