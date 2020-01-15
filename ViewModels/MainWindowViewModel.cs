@@ -22,6 +22,7 @@ namespace ViewModels
             GenreNavCommand = new RelayCommand(NavigateToGenre);
             HomeNavCommand = new RelayCommand(NavigateToHome);
             OpenLogFolderCommand = new RelayCommand(OpenLogFolder);
+            DiscountNavCommand = new RelayCommand(NavigateToDiscount);
         }
         public RelayCommand OpenLogFolderCommand { get; private set; }
         public RelayCommand BookListNavCommand { get; private set; }
@@ -32,6 +33,7 @@ namespace ViewModels
         public RelayCommand PublisherNavCommand { get; private set; }
         public RelayCommand GenreNavCommand { get; private set; }
         public RelayCommand HomeNavCommand { get; private set; }
+        public RelayCommand DiscountNavCommand { get; private set; }
 
         private void NavigateToBookList() =>
             navigationService.NavigateTo("BookList");
@@ -49,10 +51,12 @@ namespace ViewModels
             navigationService.NavigateTo("Genre");
         private void NavigateToHome() =>
             navigationService.NavigateTo("Home");
+        private void NavigateToDiscount() =>
+            navigationService.NavigateTo("Discount");
         private void OpenLogFolder()
         {
             var currentDirectory = Directory.GetCurrentDirectory();
-            Process.Start("explorer.exe",currentDirectory + @"\Logs");
+            Process.Start("explorer.exe", currentDirectory + @"\Logs");
         }
 
     }

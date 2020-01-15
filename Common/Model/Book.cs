@@ -9,6 +9,6 @@ namespace Common.Model
         public string Description { get; set; }
         [ForeignKey(nameof(Author))]
         public int AuthorId { get; set; }
-        public Author Author { get; set; }
+        public virtual Author Author { get; set; }
     }
 }

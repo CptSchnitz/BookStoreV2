@@ -10,7 +10,7 @@ namespace DAL.BookStoreRepository
     {
         Task<BaseDiscount> AddDiscountAsync(BaseDiscount discount);
 
-        Task<IEnumerable<BaseDiscount>> GetDiscountAsync();
+        Task<IEnumerable<BaseDiscount>> GetDiscountsAsync();
 
         Task RemoveDiscount(int discountId);
     }

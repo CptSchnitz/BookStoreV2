@@ -3,6 +3,7 @@ using DAL.BookStoreRepository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,9 +12,9 @@ namespace DAL.EfBookStoreRepository
     public class EfPublisherRepository : IPublisherRepository
     {
         private readonly StoreContext context;
-        public EfPublisherRepository(StoreContext context)
+        public EfPublisherRepository(StoreContextFactory factory)
         {
-            this.context = context;
+            this.context = factory.GetContext();
         }
         public async Task<Publisher> CreatePublisherAsync(Publisher publisher)
         {

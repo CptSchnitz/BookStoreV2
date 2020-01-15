@@ -11,7 +11,9 @@ namespace Logic.API
         Task<List<BaseDiscount>> GetDiscountsAsync();
         Task<BaseDiscount> AddDiscountAsync(BaseDiscount discount);
 
-        Task SetItemPricesAsync
+        Task SetItemsPricesAsync(List<AbstractItem> itemList);
+
+        Task SetItemPriceAsync(AbstractItem item);
 
     }
 }

@@ -3,6 +3,7 @@ using DAL.BookStoreRepository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,9 +12,9 @@ namespace DAL.EfBookStoreRepository
     public class EfDiscountRepository : IDiscountRepository
     {
         private readonly StoreContext context;
-        public EfDiscountRepository(StoreContext context)
+        public EfDiscountRepository(StoreContextFactory factory)
         {
-            this.context = context;
+            this.context = factory.GetContext();
         }
         public async Task<BaseDiscount> AddDiscountAsync(BaseDiscount discount)
         {
@@ -25,7 +26,7 @@ namespace DAL.EfBookStoreRepository
             return newDiscount.Entity;
         }
 
-        public  async Task<IEnumerable<BaseDiscount>> GetDiscountAsync()
+        public  async Task<IEnumerable<BaseDiscount>> GetDiscountsAsync()
         {
             return await context.Discounts.ToListAsync();
         }

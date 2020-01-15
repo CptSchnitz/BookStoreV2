@@ -3,6 +3,7 @@ using DAL.BookStoreRepository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace DAL.EfBookStoreRepository
@@ -10,9 +11,9 @@ namespace DAL.EfBookStoreRepository
     public class EfGenreRepository : IGenreRepository
     {
         private readonly StoreContext context;
-        public EfGenreRepository(StoreContext context)
+        public EfGenreRepository(StoreContextFactory factory)
         {
-            this.context = context;
+            this.context = factory.GetContext();
         }
         public async Task<Genre> CreateGenreAsync(Genre genre)
         {

@@ -7,13 +7,18 @@ namespace Common.Model
 {
     public abstract class BaseDiscount
     {
+        //For ef use
+        protected BaseDiscount() { }
         public int Id { get; set; }
         public BaseDiscount(int amount)
         {
             DiscountAmount = amount;
         }
         public int DiscountAmount { get; set; }
-        public abstract bool IsDiscountValid(AbstractItem item);
 
+        [NotMapped]
+        public decimal DiscountMulti { get => 1 - DiscountAmount / 100m; }
+        public abstract bool IsDiscountValid(AbstractItem item);
+        public abstract bool IsSameDiscount(BaseDiscount other);
     }
 }

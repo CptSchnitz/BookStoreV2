@@ -6,13 +6,17 @@ namespace Common.Model
 {
     public class AuthorDiscount : BaseDiscount
     {
-        public AuthorDiscount(Author author,int amount) : base(amount)
+        //For Ef Use
+        protected AuthorDiscount() { }
+        public AuthorDiscount(Author author, int amount) : base(amount)
         {
             AuthorId = author.Id;
         }
 
         public int AuthorId { get; set; }
-        public Author Author { get; set; }
+        public virtual Author Author { get; set; }
+
+
         public override bool IsDiscountValid(AbstractItem item)
         {
             var book = item as Book;
@@ -20,6 +24,13 @@ namespace Common.Model
                 return false;
             else
                 return true;
+        }
+
+        public override bool IsSameDiscount(BaseDiscount other)
+        {
+            var otherAuthorDiscount = other as AuthorDiscount;
+            if (otherAuthorDiscount == null) return false;
+            return otherAuthorDiscount.AuthorId == AuthorId;
         }
     }
 }

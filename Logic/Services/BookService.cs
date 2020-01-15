@@ -14,9 +14,11 @@ namespace Logic.Services
     public class BookService :ServiceBase, IBookService
     {
         IBookRepository bookRepository;
-        public BookService(IBookRepository bookRepository, ILogger logger):base(logger)
+        IDiscountService discountService;
+        public BookService(IBookRepository bookRepository, IDiscountService discountService, ILogger logger):base(logger)
         {
             this.bookRepository = bookRepository;
+            this.discountService = discountService;
         }
 
         public async Task<Book> AddBookAsync(Book book)
@@ -35,16 +37,18 @@ namespace Logic.Services
 
         public async Task<List<Book>> GetBooksAsync()
         {
+            List<Book> bookList;
             try
             {
-                var bookList = await bookRepository.GetBooksAsync();
-                return bookList.ToList();
+                bookList = (await bookRepository.GetBooksAsync()).ToList();                
             }
             catch (DataException e)
             {
                 logger.Error(e, "Error getting books");
                 throw new Exception("Error getting books from db");
             }
+            await discountService.SetItemsPricesAsync(bookList.Cast<AbstractItem>().ToList());
+            return bookList.ToList();
         }
 
         public async Task<Book> UpdateBookAsync(Book book)

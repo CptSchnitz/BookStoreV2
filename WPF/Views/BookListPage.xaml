@@ -26,6 +26,8 @@
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Title" Binding="{Binding Title}"/>
                 <DataGridTextColumn Header="Price" Binding="{Binding Price,StringFormat=\{0:$00.00\}}"/>
+                <DataGridTextColumn Header="Price after discount" Binding="{Binding DiscountedPrice,StringFormat=\{0:$00.00\}}"/>
+                <DataGridTextColumn Header="Discount Type" Binding="{Binding DiscountType}"/>
                 <DataGridTextColumn Header="Publish Date" Binding="{Binding PublishDate, StringFormat=\{0:dd.MM.yy\}}"/>
                 <DataGridTextColumn Header="Publisher" Binding="{Binding Publisher.Name}"/>
                 <DataGridTextColumn Header="Genres" Binding="{Binding ItemGenres, Converter={StaticResource IgConverter}}"/>

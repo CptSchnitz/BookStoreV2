@@ -11,9 +11,9 @@ namespace DAL.EfBookStoreRepository
     public class EfItemRepository : IItemRepository
     {
         private readonly StoreContext context;
-        public EfItemRepository(StoreContext context)
+        public EfItemRepository(StoreContextFactory factory)
         {
-            this.context = context;
+            this.context = factory.GetContext();
         }
         public async Task<AbstractItem> GetAbstractItemByIdAsync(int id)
         {
