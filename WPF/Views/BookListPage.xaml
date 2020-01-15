@@ -16,7 +16,12 @@
     </i:Interaction.Triggers>
     <DockPanel LastChildFill="True">
         <TextBlock DockPanel.Dock="Top" Text="{Binding ErrorMsg}" Visibility="{Binding ErrorMsg, Converter={StaticResource NotNullToVisConverter}}"/>
-        <DataGrid ItemsSource="{Binding BookList}">
+        <DataGrid x:Name="DataGrid" ItemsSource="{Binding BookList}" SelectionMode="Single">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding EditBookCommand}" CommandParameter="{Binding SelectedItem ,ElementName=DataGrid}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Title" Binding="{Binding Title}"/>

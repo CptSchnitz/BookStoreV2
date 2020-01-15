@@ -21,6 +21,7 @@ namespace WPF.Views
         public BookEditPage()
         {
             InitializeComponent();
+
         }
     }
 }

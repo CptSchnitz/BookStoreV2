@@ -20,13 +20,20 @@ namespace ViewModels
             this.bookService = bookService;
             this.navService = navService;
             LoadBooksCommand = new RelayCommand(LoadBooks);
+            EditBookCommand = new RelayCommand<Book>(NavToEdit);
         }
 
         public string ErrorMsg { get; set; }
 
+        public RelayCommand<Book> EditBookCommand { get; private set; }
         public RelayCommand LoadBooksCommand { get; private set; }
         public ObservableCollection<Book> BookList { get; set; }
 
+
+        private void NavToEdit(Book book)
+        {
+            navService.NavigateTo("Book", book);
+        }
         public async void LoadBooks()
         {
             try
