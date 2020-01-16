@@ -3,8 +3,8 @@
     public class ItemGenre
     {
         public int AbstractItemId { get; set; }
-        public AbstractItem AbstractItem { get; set; }
+        public virtual AbstractItem AbstractItem { get; set; }
         public int GenreId { get; set; }
-        public Genre Genre { get; set; }
+        public virtual Genre Genre { get; set; }
     }
 }

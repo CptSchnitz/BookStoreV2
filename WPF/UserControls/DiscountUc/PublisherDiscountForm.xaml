@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="WPF.UserControls.DiscountUc.PublisherDiscountForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF.UserControls.DiscountUc"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContext="{Binding DiscountPublisher,Source={StaticResource Locator}}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadPublishersCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <StackPanel>
+            <TextBlock Text="Discount Amount"/>
+            <TextBox Text="{Binding DiscountAmount, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                     Validation.ErrorTemplate="{StaticResource ValidationTemplate}" 
+                     Style="{StaticResource TextBoxInError}"/>
+            <TextBlock Text="Publisher"/>
+            <ComboBox ItemsSource="{Binding PublisherList}" SelectedItem="{Binding SelectedPublisher}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button Content="Add" Command="{Binding AddDiscountCommand}" IsEnabled="{Binding IsModelValid}"/>
+            <TextBlock Text="{Binding ErrorMsg}" Visibility="{Binding ErrorMsg, Converter={StaticResource NotNullToVisConverter}}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

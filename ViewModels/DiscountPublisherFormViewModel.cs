@@ -1,31 +1,27 @@
-﻿using Common.Model;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
-using Logic.API;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Linq;
 using System.Text;
+using Common.Model;
+using GalaSoft.MvvmLight.Command;
+using Logic.API;
 
 namespace ViewModels
 {
-    public class PublisherListViewModel : ViewModelBase
+    public class DiscountPublisherFormViewModel : DiscountFormBaseViewModel
     {
         IPublisherService publisherService;
-        public PublisherListViewModel(IPublisherService publisherService)
+        public DiscountPublisherFormViewModel(IDiscountService discountService, IPublisherService publisherService) : base(discountService)
         {
             this.publisherService = publisherService;
             LoadPublishersCommand = new RelayCommand(LoadPublishers);
-            Messenger.Default.Register<Publisher>(this, (publisher) => PublisherList.Add(publisher));
         }
 
         public RelayCommand LoadPublishersCommand { get; private set; }
         public ObservableCollection<Publisher> PublisherList { get; set; }
-
-        public string ErrorMsg { get; set; }
-
+        public Publisher SelectedPublisher { get; set; }
         public async void LoadPublishers()
         {
             try
@@ -43,6 +39,13 @@ namespace ViewModels
             {
                 RaisePropertyChanged(nameof(ErrorMsg));
             }
+            SelectedPublisher = PublisherList.FirstOrDefault();
+            RaisePropertyChanged(nameof(SelectedPublisher));
+        }
+
+        public override void AddDiscount()
+        {
+            AddDiscount(new PublisherDiscount(int.Parse(DiscountAmount), SelectedPublisher));
         }
     }
 }

@@ -18,12 +18,13 @@
                 <MenuItem Header="All Journals" Command="{Binding JournalListNavCommand}"/>
                 <MenuItem Header="New Journal" Command="{Binding JournalEditNavCommand}"/>
             </MenuItem>
+            <MenuItem Header="Discounts" Command="{Binding DiscountNavCommand}"/>
             <MenuItem Header="Genres" Command="{Binding GenreNavCommand}"/>
             <MenuItem Header="Authors" Command="{Binding AuthorNavCommand}"/>
             <MenuItem Header="Publishers" Command="{Binding PublisherNavCommand}"/>
             <MenuItem Header="Logs" Command="{Binding OpenLogFolderCommand}"/>
         </Menu>
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden">
+        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"  >
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Loaded">
                     <i:InvokeCommandAction Command="{Binding HomeNavCommand}"/>

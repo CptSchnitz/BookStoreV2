@@ -21,15 +21,11 @@ namespace DAL
                 .WithMany(ai => ai.ItemGenres)
                 .HasForeignKey(ig => ig.AbstractItemId);
 
+            modelBuilder.Entity<BaseDiscount>().HasDiscriminator(d => d.Discriminator);
+
             SeedData(modelBuilder);
             base.OnModelCreating(modelBuilder);
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            base.OnConfiguring(optionsBuilder);
-        }
-
         public DbSet<AbstractItem> Items { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Journal> Journals { get; set; }
@@ -37,7 +33,11 @@ namespace DAL
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<ItemGenre> ItemGenres { get; set; }
-
+        public DbSet<BaseDiscount> Discounts { get; set; }
+        public DbSet<AuthorDiscount> PubDiscounts { get; set; }
+        public DbSet<GenreDiscount> GenreDiscounts { get; set; }
+        public DbSet<PublisherDiscount> AuthorDiscounts { get; set; }
+        public DbSet<PublishDateDiscount> DateDiscount { get; set; }
 
         private void SeedData(ModelBuilder modelBuilder)
         {
@@ -59,7 +59,7 @@ namespace DAL
                     Price = 50,
                     AuthorId = 1,
                     PublisherId = 1,
-                    PublishDate = DateTime.Now
+                    PublishDate = new DateTime(1990, 1, 1)
                 });
             modelBuilder.Entity<Journal>()
                 .HasData(new Journal
@@ -67,7 +67,7 @@ namespace DAL
                     Id = 2,
                     Issn = "12345631",
                     Price = 40,
-                    PublishDate = DateTime.Now,
+                    PublishDate = new DateTime(1990,1,1),
                     PublisherId = 1,
                     Title = "journal",
                     IssueNum = 1

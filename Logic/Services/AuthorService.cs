@@ -4,6 +4,7 @@ using Logic.API;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,10 +26,10 @@ namespace Logic.Services
                 var newAuthor = await authorRepository.CreateAuthorAsync(author);
                 return newAuthor;
             }
-            catch (Exception e)
+            catch (DataException e)
             {
-                logger.Error(e, "Error Adding new author");
-                throw new Exception("Error Adding author to db");
+                logger?.Error(e, "Error Adding new author");
+                throw new DataException("Error Adding author to db");
             }
         }
 
@@ -39,10 +40,10 @@ namespace Logic.Services
                 var authorList = (await authorRepository.GetAuthorsAsync()).ToList();
                 return authorList;
             }
-            catch (Exception e)
+            catch (DataException e)
             {
-                logger.Error(e, "Error loading Authors");
-                throw new Exception("Error getting data from db");
+                logger?.Error(e, "Error loading Authors");
+                throw new DataException("Error getting data from db");
             }
         }
     }

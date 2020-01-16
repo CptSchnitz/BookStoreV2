@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="WPF.UserControls.DiscountUc.DiscountList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF.UserControls.DiscountUc"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContext="{Binding DiscountList,Source={StaticResource Locator}}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDiscountsCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <DockPanel>
+        <TextBlock DockPanel.Dock="Top" Text="{Binding ErrorMsg}" Visibility="{Binding ErrorMsg, Converter={StaticResource NotNullToVisConverter}}"/>
+        <DataGrid x:Name="DataGrid" AutoGenerateColumns="False" ItemsSource="{Binding DiscountList}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Discount Type" Binding="{Binding Discriminator}"/>
+                <DataGridTextColumn Header="Discount %" Binding="{Binding DiscountAmount}"/>
+                <DataGridTextColumn Header="Author">
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding StringFormat="{}{0} {1}">
+                            <Binding Path="Author.FirstName"/>
+                            <Binding Path="Author.LastName"/>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Publisher" Binding="{Binding Publisher.Name}"/>
+                <DataGridTextColumn Header="Genre" Binding="{Binding Genre.Name}"/>
+                <DataGridTextColumn Header="Publish Date" Binding="{Binding Date}"/>
+            </DataGrid.Columns>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding RemoveDiscountCommand}" CommandParameter="{Binding SelectedItem ,ElementName=DataGrid}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DataGrid>
+    </DockPanel>
+</UserControl>

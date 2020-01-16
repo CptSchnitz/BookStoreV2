@@ -6,6 +6,7 @@ using Logic.API;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Text;
 using ViewModels.Services;
 
@@ -43,7 +44,7 @@ namespace ViewModels
                 ErrorMsg = null;
                 RaisePropertyChanged(nameof(BookList));
             }
-            catch (Exception e)
+            catch (DataException e)
             {
                 ErrorMsg = e.Message;
             }

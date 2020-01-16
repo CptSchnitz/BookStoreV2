@@ -11,9 +11,9 @@ namespace DAL.EfBookStoreRepository
     public class EfJournalRepository : IJournalRepository 
     {
         private readonly StoreContext context;
-        public EfJournalRepository(StoreContext context)
+        public EfJournalRepository(StoreContextFactory factory)
         {
-            this.context = context;
+            this.context = factory.GetContext();
         }
         public async Task<Journal> CreateJournalAsync(Journal journal)
         {

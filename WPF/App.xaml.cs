@@ -35,9 +35,9 @@ namespace WPF
             SetupNavigation();
 
             var optionsBuilder = new DbContextOptionsBuilder<StoreContext>()
-                .UseSqlServer(connectionString, x => x.MigrationsAssembly("DAL"));
-            var context =  new StoreContext(optionsBuilder.Options);
-            SimpleIoc.Default.Register<StoreContext>(() => context);
+                .UseSqlServer(connectionString, x => x.MigrationsAssembly("DAL"))
+                .UseLazyLoadingProxies();
+            SimpleIoc.Default.Register<StoreContextFactory>(() => new StoreContextFactory(optionsBuilder.Options));
 
             logger.Information("Done loading Services.");
             base.OnStartup(e);
@@ -62,6 +62,7 @@ namespace WPF
             navigationService.Configure("Publisher", new Uri("./Views/PublisherPage.xaml", UriKind.Relative));
             navigationService.Configure("Genre", new Uri("./Views/GenrePage.xaml", UriKind.Relative));
             navigationService.Configure("Home", new Uri("./Views/HomePage.xaml", UriKind.Relative));
+            navigationService.Configure("Discount", new Uri("./Views/DiscountPage.xaml", UriKind.Relative));
             SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
         }
 
@@ -78,7 +79,6 @@ namespace WPF
             SimpleIoc.Default.Register<IAuthorService, AuthorService>();
             SimpleIoc.Default.Register<IAuthorRepository, EfAuthorRepository>();
 
-            SimpleIoc.Default.Register<IItemService, ItemService>();
             SimpleIoc.Default.Register<IItemRepository, EfItemRepository>();
 
             SimpleIoc.Default.Register<IJournalService, JournalService>();
@@ -86,6 +86,9 @@ namespace WPF
 
             SimpleIoc.Default.Register<IBookService, BookService>();
             SimpleIoc.Default.Register<IBookRepository, EfBookRepository>();
+
+            SimpleIoc.Default.Register<IDiscountService, DiscountService>();
+            SimpleIoc.Default.Register<IDiscountRepository, EfDiscountRepository>();
 
         }
     }

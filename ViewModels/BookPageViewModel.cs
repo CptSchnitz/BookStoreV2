@@ -28,7 +28,7 @@ namespace ViewModels
         #region ModelFields
         private string title;
         private string price;
-        private DateTime publishDate;
+        private DateTime publishDate = DateTime.Now;
         private Publisher publisher;
         private string edition;
         private string isbn;
