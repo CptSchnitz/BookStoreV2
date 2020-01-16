@@ -13,7 +13,7 @@ namespace Logic.API
 
         Task RemoveDiscountAsync(BaseDiscount discount);
 
-        Task SetItemsPricesAsync(List<AbstractItem> itemList);
+        Task SetItemsPricesAsync(IEnumerable<AbstractItem> itemList);
 
         Task SetItemPriceAsync(AbstractItem item);
 

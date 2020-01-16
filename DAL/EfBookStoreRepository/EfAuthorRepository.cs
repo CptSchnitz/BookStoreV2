@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DAL.EfBookStoreRepository
@@ -42,9 +43,9 @@ namespace DAL.EfBookStoreRepository
             return await context.Authors.SingleOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task<IEnumerable<Author>> GetAuthorsAsync()
+        public Task<IEnumerable<Author>> GetAuthorsAsync()
         {
-            return await context.Authors.ToListAsync();
+            return Task.Run(() => context.Authors.AsEnumerable());
         }
     }
 }

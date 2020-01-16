@@ -3,12 +3,13 @@ using DAL.BookStoreRepository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL.EfBookStoreRepository
 {
-    public class EfJournalRepository : IJournalRepository 
+    public class EfJournalRepository : IJournalRepository
     {
         private readonly StoreContext context;
         public EfJournalRepository(StoreContextFactory factory)
@@ -46,14 +47,12 @@ namespace DAL.EfBookStoreRepository
                 .SingleOrDefaultAsync(b => b.Id == id);
         }
 
-        public async Task<IEnumerable<Journal>> GetJournalsAsync()
+        public Task<IEnumerable<Journal>> GetJournalsAsync()
         {
-            return await context
-                .Journals
-                .Include(j => j.Publisher)
-                .Include(i => i.ItemGenres)
-                .ThenInclude(ig => ig.Genre)
-                .ToListAsync();
+            return Task.Run(() => context.Journals
+                        .Include(j => j.Publisher)
+                        .Include(i => i.ItemGenres)
+                        .ThenInclude(ig => ig.Genre).AsEnumerable());
         }
     }
 }

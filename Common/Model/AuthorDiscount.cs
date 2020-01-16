@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace Common.Model
@@ -13,6 +14,7 @@ namespace Common.Model
             AuthorId = author.Id;
         }
 
+        [ForeignKey(nameof(Author))]
         public int AuthorId { get; set; }
         public virtual Author Author { get; set; }
 

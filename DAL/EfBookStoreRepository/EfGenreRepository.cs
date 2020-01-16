@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DAL.EfBookStoreRepository
@@ -22,6 +23,7 @@ namespace DAL.EfBookStoreRepository
 
             var newGenre = await context.AddAsync(genre);
             await context.SaveChangesAsync();
+            newGenre.State = EntityState.Detached;
             return newGenre.Entity;
         }
 
@@ -42,9 +44,9 @@ namespace DAL.EfBookStoreRepository
             return await context.Genres.SingleOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task<IEnumerable<Genre>> GetGenresAsync()
+        public Task<IEnumerable<Genre>> GetGenresAsync()
         {
-            return await context.Genres.ToListAsync();
+            return Task.Run(() => context.Genres.AsEnumerable());
         }
     }
 }

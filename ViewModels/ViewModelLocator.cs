@@ -1,4 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Ioc;
+using ViewModels.DiscountViewModels;
+using ViewModels.ItemsViewModels;
 
 namespace ViewModels
 {
@@ -20,6 +22,9 @@ namespace ViewModels
             SimpleIoc.Default.Register<BookPageViewModel>();
             SimpleIoc.Default.Register<BookListViewModel>();
 
+            SimpleIoc.Default.Register<JournalPageViewModel>();
+            SimpleIoc.Default.Register<JournalListViewModel>();
+
             SimpleIoc.Default.Register<DiscountListViewModel>();
             SimpleIoc.Default.Register<DiscountAuthorFormViewModel>();
             SimpleIoc.Default.Register<DiscountGenreFormViewModel>();
@@ -36,6 +41,8 @@ namespace ViewModels
         public PublisherFormViewModel PublisherForm => SimpleIoc.Default.GetInstance<PublisherFormViewModel>();
         public BookPageViewModel BookPage => SimpleIoc.Default.GetInstance<BookPageViewModel>();
         public BookListViewModel BookList => SimpleIoc.Default.GetInstance<BookListViewModel>();
+        public JournalPageViewModel JournalPage => SimpleIoc.Default.GetInstance<JournalPageViewModel>();
+        public JournalListViewModel JournalList => SimpleIoc.Default.GetInstance<JournalListViewModel>();
         public DiscountListViewModel DiscountList => SimpleIoc.Default.GetInstance<DiscountListViewModel>();
         public DiscountAuthorFormViewModel DiscountAuthor => SimpleIoc.Default.GetInstance<DiscountAuthorFormViewModel>();
         public DiscountGenreFormViewModel DiscountGenre => SimpleIoc.Default.GetInstance<DiscountGenreFormViewModel>();

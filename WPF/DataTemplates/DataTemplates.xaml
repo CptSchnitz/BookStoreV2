@@ -1,0 +1,21 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WPF.DataTemplates"
+                    xmlns:model="clr-namespace:Common.Model;assembly=Common">
+    <DataTemplate x:Key="AuthorNameTemplate" DataType="model:Author">
+        <TextBlock>
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0} {1}">
+                    <Binding Path="FirstName"/>
+                    <Binding Path="LastName"/>
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+    </DataTemplate>
+    <DataTemplate x:Key="PublisherNameTemplate" DataType="model:Publisher">
+        <TextBlock Text="{Binding Name}"/>
+    </DataTemplate>
+    <DataTemplate x:Key="GenreNameTemplate" DataType="model:Genre">
+        <TextBlock Text="{Binding Name}"/>
+    </DataTemplate>
+</ResourceDictionary>

@@ -67,10 +67,13 @@ namespace Logic.Services
             SetItemPrice(item, discountList);
         }
 
-        public async Task SetItemsPricesAsync(List<AbstractItem> itemList)
+        public async Task SetItemsPricesAsync(IEnumerable<AbstractItem> itemList)
         {
             var discountList = await GetDiscountsAsync();
-            itemList.ForEach(item => SetItemPrice(item, discountList));
+            foreach (var item in itemList)
+            {
+                SetItemPrice(item, discountList);
+            }
         }
 
         private void SetItemPrice(AbstractItem item, List<BaseDiscount> discountList)
@@ -78,9 +81,9 @@ namespace Logic.Services
             var discounts = discountList.Where(d => d.IsDiscountValid(item)).ToList();
             if (discounts.Count > 0)
             {
-                var discount = discounts.Aggregate(discounts.First(),(maxD, d) => d.DiscountAmount > maxD.DiscountAmount ? d : maxD);
+                var discount = discounts.Aggregate(discounts.First(), (maxD, d) => d.DiscountAmount > maxD.DiscountAmount ? d : maxD);
                 item.DiscountedPrice = item.Price * discount.DiscountMulti;
-                item.DiscountType = discount.GetType().Name;
+                item.DiscountType = discount.Discriminator;
             }
             else
             {

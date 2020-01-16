@@ -22,30 +22,22 @@ namespace WPF
     public partial class App : Application
     {
         public IConfiguration Configuration { get; private set; }
-        ILogger logger;
         protected override void OnStartup(StartupEventArgs e)
         {
             var configBuilder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
             Configuration = configBuilder.Build();
-            var connectionString = Configuration.GetConnectionString("SqlConnection");
-            ConfigureLogger();
+
             ConfigureServices();
             SetupNavigation();
 
-            var optionsBuilder = new DbContextOptionsBuilder<StoreContext>()
-                .UseSqlServer(connectionString, x => x.MigrationsAssembly("DAL"))
-                .UseLazyLoadingProxies();
-            SimpleIoc.Default.Register<StoreContextFactory>(() => new StoreContextFactory(optionsBuilder.Options));
-
-            logger.Information("Done loading Services.");
             base.OnStartup(e);
         }
 
         private void ConfigureLogger()
         {
-            logger = new LoggerConfiguration()
+            var logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(Configuration)
                 .CreateLogger();
             SimpleIoc.Default.Register<ILogger>(() => logger);
@@ -68,6 +60,9 @@ namespace WPF
 
         private void ConfigureServices()
         {
+            SetDbContext();
+            ConfigureLogger();
+
             SimpleIoc.Default.Register<IMessageBoxService, WpfMessageBoxService>();
 
             SimpleIoc.Default.Register<IGenreService, GenreService>();
@@ -90,6 +85,15 @@ namespace WPF
             SimpleIoc.Default.Register<IDiscountService, DiscountService>();
             SimpleIoc.Default.Register<IDiscountRepository, EfDiscountRepository>();
 
+        }
+
+        private void SetDbContext()
+        {
+            var connectionString = Configuration.GetConnectionString("SqlConnection");
+            var optionsBuilder = new DbContextOptionsBuilder<StoreContext>()
+                .UseSqlServer(connectionString, x => x.MigrationsAssembly("DAL"))
+                .UseLazyLoadingProxies();
+            SimpleIoc.Default.Register<StoreContextFactory>(() => new StoreContextFactory(optionsBuilder.Options));
         }
     }
 }

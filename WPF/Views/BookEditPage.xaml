@@ -29,40 +29,16 @@
             <TextBlock Text="Description"/>
             <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Style="{StaticResource TextBoxInError}"/>
             <TextBlock Text="Author"/>
-            <ComboBox ItemsSource="{Binding AuthorList}" SelectedItem="{Binding Author}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock>
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} {1}">
-                                    <Binding Path="FirstName"/>
-                                    <Binding Path="LastName"/>
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+            <ComboBox ItemsSource="{Binding AuthorList}" SelectedItem="{Binding Author}" ItemTemplate="{StaticResource AuthorNameTemplate}"/>
             <TextBlock Text="Publisher"/>
-            <ComboBox ItemsSource="{Binding PublisherList}" SelectedItem="{Binding Publisher}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}"/>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+            <ComboBox ItemsSource="{Binding PublisherList}" SelectedItem="{Binding Publisher}" ItemTemplate="{StaticResource PublisherNameTemplate}"/>
             <TextBlock Text="Genres"/>
-            <ListBox x:Name="genreList" ItemsSource="{Binding GenreList}" SelectionMode="Multiple">
+            <ListBox x:Name="genreList" ItemsSource="{Binding GenreList}" SelectionMode="Multiple" ItemTemplate="{StaticResource GenreNameTemplate}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding GenresChangedCommand}" CommandParameter="{Binding SelectedItems, ElementName=genreList,Mode=OneWay}"/>
+                        <i:InvokeCommandAction Command="{Binding GenresChangedCommand}" CommandParameter="{Binding SelectedItems, ElementName=genreList,Mode=OneWay}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}"/>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
             </ListBox>
             <Button Content="Submit" Command="{Binding SubmitCommand}" IsEnabled="{Binding IsModelValid}"/>
             <TextBlock Text="{Binding ErrorMsg}" Visibility="{Binding ErrorMsg, Converter={StaticResource NotNullToVisConverter}}"/>

@@ -10,7 +10,7 @@ using System.Data;
 using System.Text;
 using ViewModels.Services;
 
-namespace ViewModels
+namespace ViewModels.ItemsViewModels
 {
     public class BookListViewModel : ViewModelBase
     {

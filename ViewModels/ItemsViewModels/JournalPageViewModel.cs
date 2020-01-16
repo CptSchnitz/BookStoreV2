@@ -2,6 +2,7 @@
 using Common.Validations;
 using GalaSoft.MvvmLight.Command;
 using Logic.API;
+using Logic.Services;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,18 +10,17 @@ using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 using ViewModels.Services;
 
-namespace ViewModels
+namespace ViewModels.ItemsViewModels
 {
-    public class BookPageViewModel : ValidationViewModelBase
+    public class JournalPageViewModel : ValidationViewModelBase
     {
         #region Services
-        IAuthorService authorService;
         IPublisherService publisherService;
         IGenreService genreService;
-        IBookService bookService;
+        IJournalService journalService;
         IFrameNavigationService navService;
         IMessageBoxService messageService;
         #endregion
@@ -30,34 +30,29 @@ namespace ViewModels
         private string price;
         private DateTime publishDate = DateTime.Now;
         private Publisher publisher;
-        private string edition;
-        private string isbn;
-        private string description;
-        private Author author;
-        private ObservableCollection<Author> authorList;
+        private string issn;
+        private string issueNum;
         private ObservableCollection<Publisher> publisherList;
         private ObservableCollection<Genre> genreList;
         private string errorMsg;
         private List<Genre> selectedGenres;
         #endregion
 
-        private Book bookToEdit;
-        public BookPageViewModel(IAuthorService authorService, IPublisherService publisherService,
-            IGenreService genreService, IBookService bookService, IFrameNavigationService navService, IMessageBoxService messageService)
+        private Journal journalToEdit;
+        public JournalPageViewModel(IJournalService journalService, IPublisherService publisherService,
+            IGenreService genreService, IFrameNavigationService navService, IMessageBoxService messageService)
         {
-            this.authorService = authorService;
             this.publisherService = publisherService;
             this.genreService = genreService;
-            this.bookService = bookService;
+            this.journalService = journalService;
             this.navService = navService;
             this.messageService = messageService;
 
             LoadedCommand = new RelayCommand(OnLoaded);
             GenresChangedCommand = new RelayCommand<IList>(UpdateSelectedGenres);
-            SubmitCommand = new RelayCommand(SubmitBook);
+            SubmitCommand = new RelayCommand(SubmitJournal);
         }
         public string ErrorMsg { get => errorMsg; set => Set(ref errorMsg, value); }
-        public ObservableCollection<Author> AuthorList { get => authorList; set => Set(ref authorList, value); }
         public ObservableCollection<Publisher> PublisherList { get => publisherList; set => Set(ref publisherList, value); }
         public ObservableCollection<Genre> GenreList { get => genreList; set => Set(ref genreList, value); }
         public RelayCommand LoadedCommand { get; private set; }
@@ -74,16 +69,13 @@ namespace ViewModels
         [Required]
         public DateTime PublishDate { get => publishDate; set => Set(ref publishDate, value); }
         public Publisher Publisher { get => publisher; set => Set(ref publisher, value); }
-        [Range(1, 100)]
-        [Required]
-        public string Edition { get => edition; set => Set(ref edition, value); }
 
         [Required]
-        public string Isbn { get => isbn; set => Set(ref isbn, value); }
+        public string Issn { get => issn; set => Set(ref issn, value); }
 
-        [MaxLength(200)]
-        public string Description { get => description; set => Set(ref description, value); }
-        public Author Author { get => author; set => Set(ref author, value); }
+        [Required]
+        [Range(1,100)]
+        public string IssueNum { get => issueNum; set => Set(ref issueNum, value); }
 
         [CollectionNotEmpty]
         public List<Genre> SelectedGenres { get => selectedGenres; set => Set(ref selectedGenres, value); }
@@ -93,18 +85,23 @@ namespace ViewModels
         {
             try
             {
-                AuthorList = new ObservableCollection<Author>(await authorService.GetAuthorsAsync());
-                PublisherList = new ObservableCollection<Publisher>(await publisherService.GetPublishersAsync());
-                GenreList = new ObservableCollection<Genre>(await genreService.GetGenresAsync());
+                var publisherTask = publisherService.GetPublishersAsync();
+                var genreTask = genreService.GetGenresAsync();
+
+                await Task.WhenAll(publisherTask, genreTask);
+
+                PublisherList = new ObservableCollection<Publisher>(await publisherTask);
+                GenreList = new ObservableCollection<Genre>(await genreTask);
+
                 ErrorMsg = null;
             }
             catch (Exception e)
             {
                 ErrorMsg = e.Message;
             }
-            
-            bookToEdit = navService.Parameter as Book;
-            if (bookToEdit != null)
+
+            journalToEdit = navService.Parameter as Journal;
+            if (journalToEdit != null)
             {
                 SetFormForEdit();
             }
@@ -116,50 +113,46 @@ namespace ViewModels
 
         private void SetFormForEdit()
         {
-            Title = bookToEdit.Title;
-            Price = bookToEdit.Price.ToString();
-            Publisher = PublisherList.FirstOrDefault(pub => pub.Id == bookToEdit.PublisherId);
-            Author = AuthorList.FirstOrDefault(author => author.Id == bookToEdit.AuthorId);
-            Edition = bookToEdit.Edition.ToString();
-            Description = bookToEdit.Description;
-            PublishDate = bookToEdit.PublishDate;
-            Isbn = bookToEdit.Isbn;
-            List<int> genresId = bookToEdit.ItemGenres.Select(ig => ig.GenreId).ToList();
+            Title = journalToEdit.Title;
+            Price = journalToEdit.Price.ToString();
+            Publisher = PublisherList.FirstOrDefault(pub => pub.Id == journalToEdit.PublisherId);
+            PublishDate = journalToEdit.PublishDate;
+            IssueNum = journalToEdit.IssueNum.ToString();
+            Issn = journalToEdit.Issn;
+            List<int> genresId = journalToEdit.ItemGenres.Select(ig => ig.GenreId).ToList();
             SelectedGenres = genreList.Where(g => genresId.Contains(g.Id)).ToList();
             RaisePropertyChanged(nameof(IsModelValid));
         }
 
-        private async void SubmitBook()
+        private async void SubmitJournal()
         {
             try
             {
-                var book = new Book
+                var journal = new Journal
                 {
                     Title = Title,
-                    AuthorId = author.Id,
-                    Edition = int.Parse(edition),
-                    Description = description,
                     Price = decimal.Parse(price),
-                    Isbn = isbn,
+                    Issn = issn,
+                    IssueNum = int.Parse(issueNum),
                     PublisherId = publisher.Id,
                     PublishDate = publishDate,
                     ItemGenres = selectedGenres.Select(genre => new ItemGenre { GenreId = genre.Id }).ToList()
                 };
                 string msg;
-                if (bookToEdit == null)
+                if (journalToEdit == null)
                 {
-                    await bookService.AddBookAsync(book);
-                    msg = "Book Created :)";
+                    await journalService.AddJournalAsync(journal);
+                    msg = "Journal Created :)";
                 }
                 else
                 {
-                    book.Id = bookToEdit.Id;
-                    await bookService.UpdateBookAsync(book);
-                    msg = "Book Edited :)";
+                    journal.Id = journalToEdit.Id;
+                    await journalService.UpdateJournalAsync(journal);
+                    msg = "Journal Edited :)";
                 }
                 ErrorMsg = null;
                 messageService.ShowMessage("BookStore", msg);
-                navService.NavigateTo("BookList");
+                navService.NavigateTo("JournalList");
             }
             catch (Exception e)
             {
@@ -172,10 +165,8 @@ namespace ViewModels
             Title = string.Empty;
             Price = string.Empty;
             Publisher = PublisherList.FirstOrDefault();
-            Author = AuthorList.FirstOrDefault();
-            Edition = string.Empty;
-            Description = string.Empty;
-            Isbn = string.Empty;
+            IssueNum = string.Empty;
+            Issn = string.Empty;
             SelectedGenres = null;
             RaisePropertyChanged(nameof(IsModelValid));
         }
@@ -187,3 +178,4 @@ namespace ViewModels
         }
     }
 }
+

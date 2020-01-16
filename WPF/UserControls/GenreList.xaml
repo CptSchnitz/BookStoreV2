@@ -9,11 +9,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{Binding GenreList ,Source={StaticResource Locator}}">
-    <UserControl.Resources>
-        <DataTemplate x:Key="GenreTemplate" DataType="{x:Type model:Genre}">
-            <TextBlock Text="{Binding Name}"/>
-        </DataTemplate>
-    </UserControl.Resources>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding LoadGenresCommand}"/>
@@ -21,6 +16,6 @@
     </i:Interaction.Triggers>
     <DockPanel LastChildFill="True">
         <TextBlock DockPanel.Dock="Top" Text="{Binding ErrorMsg}" Visibility="{Binding ErrorMsg, Converter={StaticResource NotNullToVisConverter}}"/>
-        <ListView ItemsSource="{Binding GenreList}" ItemTemplate="{StaticResource GenreTemplate}"/>
+        <ListView ItemsSource="{Binding GenreList}" ItemTemplate="{StaticResource GenreNameTemplate}"/>
     </DockPanel>
 </UserControl>

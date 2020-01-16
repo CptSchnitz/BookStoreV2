@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Text;
 
-namespace ViewModels
+namespace ViewModels.DiscountViewModels
 {
     public abstract class DiscountFormBaseViewModel : ValidationViewModelBase
     {

@@ -3,6 +3,7 @@ using DAL.BookStoreRepository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,13 +24,14 @@ namespace DAL.EfBookStoreRepository
                 .SingleOrDefaultAsync(i => i.Id == id);
         }
 
-        public async Task<IEnumerable<AbstractItem>> GetAbstractItemsAsync()
+        public Task<IEnumerable<AbstractItem>> GetAbstractItemsAsync()
         {
-            return await context.Items
-                .Include(i => i.Publisher)
-                .Include(i => i.ItemGenres)
-                .ThenInclude(ig => ig.Genre)
-                .ToListAsync();
+            //return await context.Items
+            //    .Include(i => i.Publisher)
+            //    .Include(i => i.ItemGenres)
+            //    .ThenInclude(ig => ig.Genre)
+            //    .ToListAsync();
+            return Task.Run(() => context.Items.AsEnumerable());
         }
     }
 }

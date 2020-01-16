@@ -47,7 +47,7 @@ namespace Logic.Services
                 logger?.Error(e, "Error getting books");
                 throw new DataException("Error getting books from db");
             }
-            await discountService.SetItemsPricesAsync(bookList.Cast<AbstractItem>().ToList());
+            await discountService.SetItemsPricesAsync(bookList.Cast<AbstractItem>());
             return bookList.ToList();
         }
 

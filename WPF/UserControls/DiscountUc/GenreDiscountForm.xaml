@@ -20,13 +20,7 @@
                      Validation.ErrorTemplate="{StaticResource ValidationTemplate}" 
                      Style="{StaticResource TextBoxInError}"/>
             <TextBlock Text="Genre"/>
-            <ComboBox ItemsSource="{Binding GenreList}" SelectedItem="{Binding SelectedGenre}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}"/>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+            <ComboBox ItemsSource="{Binding GenreList}" SelectedItem="{Binding SelectedGenre}" ItemTemplate="{StaticResource GenreNameTemplate}"/>
             <Button Content="Add" Command="{Binding AddDiscountCommand}" IsEnabled="{Binding IsModelValid}"/>
             <TextBlock Text="{Binding ErrorMsg}" Visibility="{Binding ErrorMsg, Converter={StaticResource NotNullToVisConverter}}"/>
         </StackPanel>

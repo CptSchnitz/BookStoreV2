@@ -4,11 +4,37 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WPF.Views"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="JournalListPage">
+      Title="JournalListPage"
+      DataContext="{Binding JournalList, Source={StaticResource Locator}}">
 
-    <Grid>
-        <TextBlock Text="Journal lol"/>
-    </Grid>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadJournalsCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <DockPanel LastChildFill="True">
+        <TextBlock DockPanel.Dock="Top" Text="{Binding ErrorMsg}" Visibility="{Binding ErrorMsg, Converter={StaticResource NotNullToVisConverter}}"/>
+        <DataGrid x:Name="DataGrid" ItemsSource="{Binding JournalList}" SelectionMode="Single">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding EditJournalCommand}" CommandParameter="{Binding SelectedItem ,ElementName=DataGrid}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Title" Binding="{Binding Title}"/>
+                <DataGridTextColumn Header="Price" Binding="{Binding Price,StringFormat=\{0:$00.00\}}"/>
+                <DataGridTextColumn Header="Price after discount" Binding="{Binding DiscountedPrice,StringFormat=\{0:$00.00\}}"/>
+                <DataGridTextColumn Header="Discount Type" Binding="{Binding DiscountType}"/>
+                <DataGridTextColumn Header="Publish Date" Binding="{Binding PublishDate, StringFormat=\{0:dd.MM.yy\}}"/>
+                <DataGridTextColumn Header="Publisher" Binding="{Binding Publisher.Name}"/>
+                <DataGridTextColumn Header="Genres" Binding="{Binding ItemGenres, Converter={StaticResource IgConverter}}"/>
+                <DataGridTextColumn Header="ISSN" Binding="{Binding Issn}"/>
+                <DataGridTextColumn Header="Issue Number" Binding="{Binding IssueNum}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
 </Page>

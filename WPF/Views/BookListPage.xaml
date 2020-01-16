@@ -32,6 +32,7 @@
                 <DataGridTextColumn Header="Publisher" Binding="{Binding Publisher.Name}"/>
                 <DataGridTextColumn Header="Genres" Binding="{Binding ItemGenres, Converter={StaticResource IgConverter}}"/>
                 <DataGridTextColumn Header="ISBN" Binding="{Binding Isbn}"/>
+                <DataGridTextColumn Header="Edition" Binding="{Binding Edition}"/>
                 <DataGridTextColumn Header="Author">
                     <DataGridTextColumn.Binding>
                         <MultiBinding StringFormat="{}{0} {1}">
@@ -40,7 +41,7 @@
                         </MultiBinding>
                     </DataGridTextColumn.Binding>
                 </DataGridTextColumn>
-
+                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
             </DataGrid.Columns>
         </DataGrid>
     </DockPanel>

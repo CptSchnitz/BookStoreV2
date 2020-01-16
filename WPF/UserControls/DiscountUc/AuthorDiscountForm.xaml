@@ -20,20 +20,7 @@
                      Validation.ErrorTemplate="{StaticResource ValidationTemplate}" 
                      Style="{StaticResource TextBoxInError}"/>
             <TextBlock Text="Author"/>
-            <ComboBox ItemsSource="{Binding AuthorList}" SelectedItem="{Binding SelectedAuthor}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock>
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} {1}">
-                                    <Binding Path="FirstName"/>
-                                    <Binding Path="LastName"/>
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+            <ComboBox ItemsSource="{Binding AuthorList}" SelectedItem="{Binding SelectedAuthor}" ItemTemplate="{StaticResource AuthorNameTemplate}"/>
             <Button Content="Add" Command="{Binding AddDiscountCommand}" IsEnabled="{Binding IsModelValid}"/>
             <TextBlock Text="{Binding ErrorMsg}" Visibility="{Binding ErrorMsg, Converter={StaticResource NotNullToVisConverter}}"/>
         </StackPanel>

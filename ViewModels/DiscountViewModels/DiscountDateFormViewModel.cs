@@ -4,7 +4,7 @@ using System.Text;
 using Common.Model;
 using Logic.API;
 
-namespace ViewModels
+namespace ViewModels.DiscountViewModels
 {
     public class DiscountDateFormViewModel : DiscountFormBaseViewModel
     {

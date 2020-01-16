@@ -8,7 +8,7 @@ using Common.Model;
 using GalaSoft.MvvmLight.Command;
 using Logic.API;
 
-namespace ViewModels
+namespace ViewModels.DiscountViewModels
 {
     public class DiscountGenreFormViewModel : DiscountFormBaseViewModel
     {

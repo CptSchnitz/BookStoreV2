@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,12 +24,14 @@ namespace DAL.EfBookStoreRepository
 
             var newDiscount = await context.AddAsync(discount);
             await context.SaveChangesAsync();
-            return await context.Discounts.FirstOrDefaultAsync(d => d.Id == newDiscount.Entity.Id);
+            newDiscount.State = EntityState.Detached;
+            return newDiscount.Entity;
         }
 
-        public  async Task<IEnumerable<BaseDiscount>> GetDiscountsAsync()
+        public Task<IEnumerable<BaseDiscount>> GetDiscountsAsync()
         {
-            return await context.Discounts.ToListAsync();
+            //return await context.Discounts.ToListAsync();
+            return Task.Run(() => context.Discounts.AsEnumerable());
         }
 
         public async Task RemoveDiscount(int discountId)

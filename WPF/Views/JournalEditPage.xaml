@@ -4,12 +4,40 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WPF.Views"
+      xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="JournalEditPage">
-
-    <Grid>
-        <TextBlock Text="Journal Edit"/>
-
-    </Grid>
+      Title="JournalEditPage"
+      DataContext="{Binding JournalPage, Source={StaticResource Locator}}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadedCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <ScrollViewer>
+        <StackPanel Width="400">
+            <TextBlock Text="Title"/>
+            <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Style="{StaticResource TextBoxInError}"/>
+            <TextBlock Text="Price"/>
+            <TextBox Text="{Binding Price, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Style="{StaticResource TextBoxInError}"/>
+            <TextBlock Text="Issue number"/>
+            <TextBox Text="{Binding IssueNum, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Style="{StaticResource TextBoxInError}"/>
+            <TextBlock Text="Publish Date"/>
+            <DatePicker SelectedDate="{Binding PublishDate, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"  Validation.ErrorTemplate="{StaticResource ValidationTemplate}"/>
+            <TextBlock Text="ISSN"/>
+            <TextBox Text="{Binding Issn, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Style="{StaticResource TextBoxInError}"/>
+            <TextBlock Text="Publisher"/>
+            <ComboBox ItemsSource="{Binding PublisherList}" SelectedItem="{Binding Publisher}" ItemTemplate="{StaticResource PublisherNameTemplate}"/>
+            <TextBlock Text="Genres"/>
+            <ListBox x:Name="genreList" ItemsSource="{Binding GenreList}" SelectionMode="Multiple" ItemTemplate="{StaticResource GenreNameTemplate}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding GenresChangedCommand}" CommandParameter="{Binding SelectedItems, ElementName=genreList,Mode=OneWay}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListBox>
+            <Button Content="Submit" Command="{Binding SubmitCommand}" IsEnabled="{Binding IsModelValid}"/>
+            <TextBlock Text="{Binding ErrorMsg}" Visibility="{Binding ErrorMsg, Converter={StaticResource NotNullToVisConverter}}"/>
+        </StackPanel>
+    </ScrollViewer>
 </Page>
