@@ -8,6 +8,15 @@
              d:DesignHeight="450" d:DesignWidth="800"
              DataContext="{Binding DiscountDate,Source={StaticResource Locator}}">
     <Grid>
-        <TextBlock Text="Date Discount"/>
+        <StackPanel>
+            <TextBlock Text="Discount Amount"/>
+            <TextBox Text="{Binding DiscountAmount, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
+                     Validation.ErrorTemplate="{StaticResource ValidationTemplate}" 
+                     Style="{StaticResource TextBoxInError}"/>
+            <TextBlock Text="Publish date"/>
+            <DatePicker SelectedDate="{Binding DiscountDate,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"/>
+            <Button Content="Add" Command="{Binding AddDiscountCommand}" IsEnabled="{Binding IsModelValid}"/>
+            <TextBlock Text="{Binding ErrorMsg}" Visibility="{Binding ErrorMsg, Converter={StaticResource NotNullToVisConverter}}"/>
+        </StackPanel>
     </Grid>
 </UserControl>

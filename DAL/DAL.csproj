@@ -7,6 +7,12 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200115184719_AddDiscountSupport.cs" />
     <Compile Remove="Migrations\20200115184719_AddDiscountSupport.Designer.cs" />
+    <Compile Remove="Migrations\20200116075323_AddedDiscriminantorDiscount.cs" />
+    <Compile Remove="Migrations\20200116075323_AddedDiscriminantorDiscount.Designer.cs" />
+    <Compile Remove="Migrations\20200116075503_AddedDiscriminatorDiscount.cs" />
+    <Compile Remove="Migrations\20200116075503_AddedDiscriminatorDiscount.Designer.cs" />
+    <Compile Remove="Migrations\20200116075608_AddedDiscriminatorDiscount.cs" />
+    <Compile Remove="Migrations\20200116075608_AddedDiscriminatorDiscount.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

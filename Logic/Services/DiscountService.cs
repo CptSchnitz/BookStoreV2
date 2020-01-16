@@ -30,8 +30,8 @@ namespace Logic.Services
             }
             catch (DataException e)
             {
-                logger.Error(e, "Error adding discount");
-                throw new Exception("Error adding the discount to the db");
+                logger?.Error(e, "Error adding discount");
+                throw new DataException("Error adding the discount to the db");
             }
         }
 
@@ -43,8 +43,21 @@ namespace Logic.Services
             }
             catch (DataException e)
             {
-                logger.Error(e, "Error getting discounts");
-                throw new Exception("Error getting discounts from the db");
+                logger?.Error(e, "Error getting discounts");
+                throw new DataException("Error getting discounts from the db");
+            }
+        }
+
+        public async Task RemoveDiscountAsync(BaseDiscount discount)
+        {
+            try
+            {
+                await discountRepo.RemoveDiscount(discount.Id);
+            }
+            catch (DataException e)
+            {
+                logger?.Error(e, "Error removing discount");
+                throw new DataException("Error removing discount from the db");
             }
         }
 

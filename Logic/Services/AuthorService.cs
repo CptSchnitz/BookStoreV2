@@ -28,8 +28,8 @@ namespace Logic.Services
             }
             catch (DataException e)
             {
-                logger.Error(e, "Error Adding new author");
-                throw new Exception("Error Adding author to db");
+                logger?.Error(e, "Error Adding new author");
+                throw new DataException("Error Adding author to db");
             }
         }
 
@@ -42,8 +42,8 @@ namespace Logic.Services
             }
             catch (DataException e)
             {
-                logger.Error(e, "Error loading Authors");
-                throw new Exception("Error getting data from db");
+                logger?.Error(e, "Error loading Authors");
+                throw new DataException("Error getting data from db");
             }
         }
     }

@@ -16,6 +16,8 @@ namespace Common.Model
         }
         public int DiscountAmount { get; set; }
 
+        public string Discriminator { get; set; }
+
         [NotMapped]
         public decimal DiscountMulti { get => 1 - DiscountAmount / 100m; }
         public abstract bool IsDiscountValid(AbstractItem item);

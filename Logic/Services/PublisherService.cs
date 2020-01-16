@@ -28,8 +28,8 @@ namespace Logic.Services
             }
             catch (DataException e)
             {
-                logger.Error(e, "Error Adding new Publisher");
-                throw new Exception("Error Adding publisher to db");
+                logger?.Error(e, "Error Adding new Publisher");
+                throw new DataException("Error Adding publisher to db");
             }
         }
 
@@ -42,8 +42,8 @@ namespace Logic.Services
             }
             catch (DataException e)
             {
-                logger.Error(e, "Error loading Publishers");
-                throw new Exception("Error getting data from db");
+                logger?.Error(e, "Error loading Publishers");
+                throw new DataException("Error getting data from db");
             }
         }
     }

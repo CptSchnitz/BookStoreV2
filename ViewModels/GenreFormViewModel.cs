@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Text;
 using System.Threading;
 
@@ -42,7 +43,7 @@ namespace ViewModels
                 ErrorMsg = null;
                 CleanForm();
             }
-            catch (Exception e)
+            catch (DataException e)
             {
                 ErrorMsg = e.Message;
             }

@@ -6,6 +6,7 @@ using Logic.API;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Text;
 
 namespace ViewModels
@@ -48,7 +49,7 @@ namespace ViewModels
                 ErrorMsg = null;
                 CleanForm();
             }
-            catch (Exception e)
+            catch (DataException e)
             {
                 ErrorMsg = e.Message;
             }

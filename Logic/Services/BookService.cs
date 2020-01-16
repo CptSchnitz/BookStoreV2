@@ -30,8 +30,8 @@ namespace Logic.Services
             }
             catch (DataException e)
             {
-                logger.Error(e, "Error Adding new book");
-                throw new Exception("Error Adding book to db");
+                logger?.Error(e, "Error Adding new book");
+                throw new DataException("Error Adding book to db");
             }
         }
 
@@ -44,8 +44,8 @@ namespace Logic.Services
             }
             catch (DataException e)
             {
-                logger.Error(e, "Error getting books");
-                throw new Exception("Error getting books from db");
+                logger?.Error(e, "Error getting books");
+                throw new DataException("Error getting books from db");
             }
             await discountService.SetItemsPricesAsync(bookList.Cast<AbstractItem>().ToList());
             return bookList.ToList();
@@ -60,8 +60,8 @@ namespace Logic.Services
             }
             catch (DataException e)
             {
-                logger.Error(e, "Error Updating book");
-                throw new Exception("Error Updating book");
+                logger?.Error(e, "Error Updating book");
+                throw new DataException("Error Updating book");
             }
         }
     }

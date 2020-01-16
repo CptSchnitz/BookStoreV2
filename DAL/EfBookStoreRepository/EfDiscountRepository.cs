@@ -23,7 +23,7 @@ namespace DAL.EfBookStoreRepository
 
             var newDiscount = await context.AddAsync(discount);
             await context.SaveChangesAsync();
-            return newDiscount.Entity;
+            return await context.Discounts.FirstOrDefaultAsync(d => d.Id == newDiscount.Entity.Id);
         }
 
         public  async Task<IEnumerable<BaseDiscount>> GetDiscountsAsync()

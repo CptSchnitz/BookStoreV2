@@ -28,8 +28,8 @@ namespace Logic.Services
             }
             catch (DataException e)
             {
-                logger.Error(e, "Error Adding new Genre");
-                throw new Exception("Error Adding genre to db");
+                logger?.Error(e, "Error Adding new Genre");
+                throw new DataException("Error Adding genre to db");
             }
         }
 
@@ -42,8 +42,8 @@ namespace Logic.Services
             }
             catch(DataException e)
             {
-                logger.Error(e, "Error loading Genres");
-                throw new Exception("Error getting data from db");
+                logger?.Error(e, "Error loading Genres");
+                throw new DataException("Error getting data from db");
             }
             
         }
