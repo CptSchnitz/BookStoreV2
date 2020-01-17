@@ -2,14 +2,12 @@
 using Common.Validations;
 using GalaSoft.MvvmLight.Command;
 using Logic.API;
-using Logic.Services;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using ViewModels.Services;
 
@@ -74,7 +72,7 @@ namespace ViewModels.ItemsViewModels
         public string Issn { get => issn; set => Set(ref issn, value); }
 
         [Required]
-        [Range(1,100)]
+        [Range(1, 100)]
         public string IssueNum { get => issueNum; set => Set(ref issueNum, value); }
 
         [CollectionNotEmpty]
@@ -85,6 +83,7 @@ namespace ViewModels.ItemsViewModels
         {
             try
             {
+                // load all the publishers and genres to create a new book
                 var publisherTask = publisherService.GetPublishersAsync();
                 var genreTask = genreService.GetGenresAsync();
 
@@ -100,6 +99,7 @@ namespace ViewModels.ItemsViewModels
                 ErrorMsg = e.Message;
             }
 
+            // set the model properties based if new journal or edit
             journalToEdit = navService.Parameter as Journal;
             if (journalToEdit != null)
             {
@@ -111,6 +111,7 @@ namespace ViewModels.ItemsViewModels
             }
         }
 
+        // populates the model from the journalToEdit received as nav parameter
         private void SetFormForEdit()
         {
             Title = journalToEdit.Title;
@@ -128,6 +129,7 @@ namespace ViewModels.ItemsViewModels
         {
             try
             {
+                //create new journal
                 var journal = new Journal
                 {
                     Title = Title,
@@ -139,6 +141,8 @@ namespace ViewModels.ItemsViewModels
                     ItemGenres = selectedGenres.Select(genre => new ItemGenre { GenreId = genre.Id }).ToList()
                 };
                 string msg;
+
+                // calls the correct journal service command based if edit or new journal
                 if (journalToEdit == null)
                 {
                     await journalService.AddJournalAsync(journal);
@@ -151,6 +155,8 @@ namespace ViewModels.ItemsViewModels
                     msg = "Journal Edited :)";
                 }
                 ErrorMsg = null;
+
+                // shows a message to the user, and goes to the journal list page
                 messageService.ShowMessage("BookStore", msg);
                 navService.NavigateTo("JournalList");
             }
@@ -160,6 +166,7 @@ namespace ViewModels.ItemsViewModels
             }
         }
 
+        // sets all the model properties to empty.
         private void ResetForm()
         {
             Title = string.Empty;

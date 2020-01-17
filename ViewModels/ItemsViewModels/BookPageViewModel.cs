@@ -8,12 +8,12 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using ViewModels.Services;
 
 namespace ViewModels.ItemsViewModels
 {
+    // view model for adding a new book
     public class BookPageViewModel : ValidationViewModelBase
     {
         #region Services
@@ -64,6 +64,7 @@ namespace ViewModels.ItemsViewModels
         public RelayCommand SubmitCommand { get; private set; }
         public RelayCommand<IList> GenresChangedCommand { get; private set; }
 
+        // all the properties for the model. when value is changed, the UI is notified.
         #region ModelProps
         [Required]
         [MaxLength(100, ErrorMessage = "Title is too long")]
@@ -93,12 +94,15 @@ namespace ViewModels.ItemsViewModels
         {
             try
             {
+                // load authors, publishers and genres to populate the form.
                 var authorTask = authorService.GetAuthorsAsync();
                 var publisherTask = publisherService.GetPublishersAsync();
                 var genreTask = genreService.GetGenresAsync();
 
+                // wait until all the loading is complete.
                 await Task.WhenAll(authorTask, publisherTask, genreTask);
 
+                // populates the lists.
                 AuthorList = new ObservableCollection<Author>(await authorTask);
                 PublisherList = new ObservableCollection<Publisher>(await publisherTask);
                 GenreList = new ObservableCollection<Genre>(await genreTask);
@@ -109,7 +113,8 @@ namespace ViewModels.ItemsViewModels
             {
                 ErrorMsg = e.Message;
             }
-            
+
+            // if creating new book, reset all the fields, otherwise sets the values to match the parameter
             bookToEdit = navService.Parameter as Book;
             if (bookToEdit != null)
             {
@@ -121,6 +126,7 @@ namespace ViewModels.ItemsViewModels
             }
         }
 
+        // copies the value from the book to edit to the model properties.
         private void SetFormForEdit()
         {
             Title = bookToEdit.Title;
@@ -136,10 +142,12 @@ namespace ViewModels.ItemsViewModels
             RaisePropertyChanged(nameof(IsModelValid));
         }
 
+        // saves a new book to the db
         private async void SubmitBook()
         {
             try
             {
+                //create a new book.
                 var book = new Book
                 {
                     Title = Title,
@@ -152,7 +160,10 @@ namespace ViewModels.ItemsViewModels
                     PublishDate = publishDate,
                     ItemGenres = selectedGenres.Select(genre => new ItemGenre { GenreId = genre.Id }).ToList()
                 };
+
                 string msg;
+
+                //calls the correct service operation based if edit or new
                 if (bookToEdit == null)
                 {
                     await bookService.AddBookAsync(book);
@@ -166,6 +177,8 @@ namespace ViewModels.ItemsViewModels
                 }
                 ErrorMsg = null;
                 messageService.ShowMessage("BookStore", msg);
+
+                // navigate back to the book list page
                 navService.NavigateTo("BookList");
             }
             catch (Exception e)
@@ -174,6 +187,7 @@ namespace ViewModels.ItemsViewModels
             }
         }
 
+        // sets all the model propeties to null
         private void ResetForm()
         {
             Title = string.Empty;
@@ -189,6 +203,7 @@ namespace ViewModels.ItemsViewModels
 
         private void UpdateSelectedGenres(IList genreList)
         {
+            //this cast is required as the selectedItems property from wpf is Non generic IList
             SelectedGenres = genreList.Cast<Genre>().ToList();
             RaisePropertyChanged(nameof(IsModelValid));
         }

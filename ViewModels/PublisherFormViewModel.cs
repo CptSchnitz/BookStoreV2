@@ -2,14 +2,12 @@
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Logic.API;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Text;
 
 namespace ViewModels
 {
+    // view model for adding publishers
     public class PublisherFormViewModel : ValidationViewModelBase
     {
         IPublisherService publisherService;
@@ -19,6 +17,7 @@ namespace ViewModels
             AddPublisherCommand = new RelayCommand(AddPublisher);
         }
 
+        #region ModelProps
         [Required(AllowEmptyStrings = false, ErrorMessage = "Name is required")]
         [MaxLength(30, ErrorMessage = "The name is too long")]
         public string Name { get; set; }
@@ -26,7 +25,8 @@ namespace ViewModels
         [Required(AllowEmptyStrings = false, ErrorMessage = "Email is required")]
         [MaxLength(80, ErrorMessage = "The email is too long")]
         [EmailAddress]
-        public string ContactEmail { get; set; }
+        public string ContactEmail { get; set; } 
+        #endregion
         public string ErrorMsg { get; set; }
 
         public RelayCommand AddPublisherCommand { get; set; }
@@ -35,12 +35,14 @@ namespace ViewModels
         {
             try
             {
-                var publisher = new Publisher                
+                var publisher = new Publisher
                 {
                     Name = Name,
                     ContactEmail = ContactEmail
                 };
                 var newPublisher = await publisherService.AddPublisherAsync(publisher);
+
+                // sending the new publisher
                 Messenger.Default.Send<Publisher>(newPublisher);
                 ErrorMsg = null;
                 CleanForm();

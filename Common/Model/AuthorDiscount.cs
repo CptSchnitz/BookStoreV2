@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Common.Model
 {
@@ -19,8 +16,10 @@ namespace Common.Model
         public virtual Author Author { get; set; }
 
 
+        // checks if this discount is applicable for the item
         public override bool IsDiscountValid(AbstractItem item)
         {
+            // only book got author
             var book = item as Book;
             if (book == null || book.AuthorId != AuthorId)
                 return false;

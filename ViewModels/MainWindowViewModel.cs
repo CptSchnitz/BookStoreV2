@@ -6,6 +6,8 @@ using ViewModels.Services;
 
 namespace ViewModels
 {
+    // the view model for the main page, with navigation commands to all the
+    // other pages.
     public class MainWindowViewModel : ViewModelBase
     {
         IFrameNavigationService navigationService;

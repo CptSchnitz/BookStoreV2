@@ -3,14 +3,12 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Logic.API;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Text;
 
 namespace ViewModels
 {
+    // view model to display publisher list
     public class PublisherListViewModel : ViewModelBase
     {
         IPublisherService publisherService;

@@ -2,16 +2,14 @@
 using DAL.BookStoreRepository;
 using Logic.API;
 using Serilog;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Logic.Services
 {
-    public class GenreService :ServiceBase ,IGenreService
+    public class GenreService : ServiceBase, IGenreService
     {
         IGenreRepository genreRepository;
         public GenreService(IGenreRepository genreRepository, ILogger logger) : base(logger)
@@ -40,12 +38,12 @@ namespace Logic.Services
                 var genreList = (await genreRepository.GetGenresAsync()).ToList();
                 return genreList;
             }
-            catch(DataException e)
+            catch (DataException e)
             {
                 logger?.Error(e, "Error loading Genres");
                 throw new DataException("Error getting data from db");
             }
-            
+
         }
     }
 }

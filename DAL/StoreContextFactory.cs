@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DAL
 {
+    // we inject this factory instead of context, and that way we have an instance
+    // for each repo (easier with mvvm light simpleioc limitations.
     public class StoreContextFactory
     {
         DbContextOptions options;

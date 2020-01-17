@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Common.Model
 {
@@ -11,6 +9,7 @@ namespace Common.Model
 
         public PublishDateDiscount(DateTime publishDate, int amount) : base(amount)
         {
+            // this way you save only the date part, and cut the time
             Date = publishDate.Date;
         }
 

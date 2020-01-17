@@ -2,13 +2,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace WPF.EfMigration
 {
+    // this class is used by ef migrations to configure the db 
     class BookStoreFactory : IDesignTimeDbContextFactory<StoreContext>
     {
         public StoreContext CreateDbContext(string[] args)

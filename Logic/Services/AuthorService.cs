@@ -2,16 +2,14 @@
 using DAL.BookStoreRepository;
 using Logic.API;
 using Serilog;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Logic.Services
 {
-    public class AuthorService : ServiceBase ,IAuthorService
+    public class AuthorService : ServiceBase, IAuthorService
     {
         IAuthorRepository authorRepository;
         public AuthorService(IAuthorRepository authorRepository, ILogger logger) : base(logger)

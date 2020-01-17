@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Common.Model;
+using GalaSoft.MvvmLight.Command;
+using Logic.API;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
-using System.Text;
-using Common.Model;
-using GalaSoft.MvvmLight.Command;
-using Logic.API;
 
 namespace ViewModels.DiscountViewModels
 {
+    //view model for creating a publisher discount
     public class DiscountPublisherFormViewModel : DiscountFormBaseViewModel
     {
         IPublisherService publisherService;
@@ -19,6 +17,7 @@ namespace ViewModels.DiscountViewModels
             LoadPublishersCommand = new RelayCommand(LoadPublishers);
         }
 
+        //command for loading the discounts
         public RelayCommand LoadPublishersCommand { get; private set; }
         public ObservableCollection<Publisher> PublisherList { get; set; }
         public Publisher SelectedPublisher { get; set; }
@@ -39,6 +38,8 @@ namespace ViewModels.DiscountViewModels
             {
                 RaisePropertyChanged(nameof(ErrorMsg));
             }
+
+            // sets the selected publisher at the start
             SelectedPublisher = PublisherList.FirstOrDefault();
             RaisePropertyChanged(nameof(SelectedPublisher));
         }

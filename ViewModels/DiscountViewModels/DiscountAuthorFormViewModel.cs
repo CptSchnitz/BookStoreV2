@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Common.Model;
+using GalaSoft.MvvmLight.Command;
+using Logic.API;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
-using System.Text;
-using Common.Model;
-using GalaSoft.MvvmLight.Command;
-using Logic.API;
 
 namespace ViewModels.DiscountViewModels
 {
+    // the view model for adding a new author discount
     public class DiscountAuthorFormViewModel : DiscountFormBaseViewModel
     {
         IAuthorService authorService;
@@ -18,7 +16,7 @@ namespace ViewModels.DiscountViewModels
             this.authorService = authorService;
             LoadAuthorsCommand = new RelayCommand(LoadAuthors);
         }
-
+        // the command to load the authors
         public RelayCommand LoadAuthorsCommand { get; private set; }
         public ObservableCollection<Author> AuthorList { get; set; }
         public Author SelectedAuthor { get; set; }
@@ -26,6 +24,7 @@ namespace ViewModels.DiscountViewModels
         {
             try
             {
+                // loads the authors and notify the view that it changed
                 var list = await authorService.GetAuthorsAsync();
                 AuthorList = new ObservableCollection<Author>(list);
                 ErrorMsg = null;
@@ -39,6 +38,8 @@ namespace ViewModels.DiscountViewModels
             {
                 RaisePropertyChanged(nameof(ErrorMsg));
             }
+
+            //sets a selected author so its not null
             SelectedAuthor = AuthorList.FirstOrDefault();
             RaisePropertyChanged(nameof(SelectedAuthor));
         }

@@ -3,14 +3,12 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Logic.API;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Text;
 
 namespace ViewModels
 {
+    // View model to display all authors
     public class AuthorListViewModel : ViewModelBase
     {
         IAuthorService authorService;
@@ -18,6 +16,8 @@ namespace ViewModels
         {
             this.authorService = authorService;
             LoadAuthorsCommand = new RelayCommand(LoadAuthors);
+
+            // when message recieved, add author to the list of authors to display.
             Messenger.Default.Register<Author>(this, (author) => AuthorList.Add(author));
         }
 

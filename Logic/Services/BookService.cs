@@ -2,20 +2,18 @@
 using DAL.BookStoreRepository;
 using Logic.API;
 using Serilog;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Logic.Services
 {
-    public class BookService :ServiceBase, IBookService
+    public class BookService : ServiceBase, IBookService
     {
         IBookRepository bookRepository;
         IDiscountService discountService;
-        public BookService(IBookRepository bookRepository, IDiscountService discountService, ILogger logger):base(logger)
+        public BookService(IBookRepository bookRepository, IDiscountService discountService, ILogger logger) : base(logger)
         {
             this.bookRepository = bookRepository;
             this.discountService = discountService;
@@ -40,14 +38,17 @@ namespace Logic.Services
             List<Book> bookList;
             try
             {
-                bookList = (await bookRepository.GetBooksAsync()).ToList();                
+                bookList = (await bookRepository.GetBooksAsync()).ToList();
             }
             catch (DataException e)
             {
                 logger?.Error(e, "Error getting books");
                 throw new DataException("Error getting books from db");
             }
+
+            // settings the prices after the discount
             await discountService.SetItemsPricesAsync(bookList.Cast<AbstractItem>());
+
             return bookList.ToList();
         }
 

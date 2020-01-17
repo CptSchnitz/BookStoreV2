@@ -1,5 +1,6 @@
 ﻿namespace Common.Model
 {
+    // The type for the connecting table between genre and items
     public class ItemGenre
     {
         public int AbstractItemId { get; set; }

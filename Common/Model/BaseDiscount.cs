@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Common.Model
 {
@@ -20,6 +17,7 @@ namespace Common.Model
 
         [NotMapped]
         public decimal DiscountMulti { get => 1 - DiscountAmount / 100m; }
+        // every discount needs to overide this method so you can check if discount is applicable
         public abstract bool IsDiscountValid(AbstractItem item);
         public abstract bool IsSameDiscount(BaseDiscount other);
     }

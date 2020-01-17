@@ -2,11 +2,9 @@
 using DAL.BookStoreRepository;
 using Logic.API;
 using Serilog;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Logic.Services
@@ -15,7 +13,7 @@ namespace Logic.Services
     {
         IJournalRepository journalRepository;
         IDiscountService discountService;
-        public JournalService(IJournalRepository journalRepository, IDiscountService discountService , ILogger logger) : base(logger)
+        public JournalService(IJournalRepository journalRepository, IDiscountService discountService, ILogger logger) : base(logger)
         {
             this.discountService = discountService;
             this.journalRepository = journalRepository;
@@ -47,7 +45,10 @@ namespace Logic.Services
                 logger?.Error(e, "Error getting journals");
                 throw new DataException("Error getting journals from db");
             }
+
+            // sets the prices after discount for the journal
             await discountService.SetItemsPricesAsync(journalList.Cast<AbstractItem>());
+
             return journalList.ToList();
         }
 

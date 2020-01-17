@@ -1,10 +1,8 @@
 ﻿using Common.Model;
 using DAL.BookStoreRepository;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL.EfBookStoreRepository
@@ -20,18 +18,15 @@ namespace DAL.EfBookStoreRepository
         {
             return await context.Items
                 .Include(i => i.ItemGenres)
-                .ThenInclude(ig => ig.Genre)               
+                .ThenInclude(ig => ig.Genre)
                 .SingleOrDefaultAsync(i => i.Id == id);
         }
 
         public Task<IEnumerable<AbstractItem>> GetAbstractItemsAsync()
         {
-            //return await context.Items
-            //    .Include(i => i.Publisher)
-            //    .Include(i => i.ItemGenres)
-            //    .ThenInclude(ig => ig.Genre)
-            //    .ToListAsync();
-            return Task.Run(() => context.Items.AsEnumerable());
+            return Task.Run(() => context.Items.Include(i => i.Publisher)
+                .Include(i => i.ItemGenres)
+                .ThenInclude(ig => ig.Genre).AsEnumerable());
         }
     }
 }

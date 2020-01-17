@@ -1,11 +1,10 @@
 ﻿using Common.Model;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Logic.API
 {
+    //service for all genre operations
     public interface IGenreService
     {
         Task<List<Genre>> GetGenresAsync();

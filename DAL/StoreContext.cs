@@ -10,6 +10,7 @@ namespace DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // setting up the many to many relation between genre and item
             modelBuilder.Entity<ItemGenre>()
                 .HasKey(ig => new { ig.AbstractItemId, ig.GenreId });
             modelBuilder.Entity<ItemGenre>()
@@ -39,6 +40,7 @@ namespace DAL
         public DbSet<PublisherDiscount> AuthorDiscounts { get; set; }
         public DbSet<PublishDateDiscount> DateDiscount { get; set; }
 
+        // random data to populate the db
         private void SeedData(ModelBuilder modelBuilder)
         {
             modelBuilder
@@ -47,7 +49,7 @@ namespace DAL
             modelBuilder.Entity<Author>()
                 .HasData(new Author { Id = 1, FirstName = "john", LastName = "doe", PseuduName = "don joe" });
             modelBuilder.Entity<Genre>()
-                .HasData(new Genre { Id = 1, Name = "BrainPower" });            
+                .HasData(new Genre { Id = 1, Name = "BrainPower" });
             modelBuilder.Entity<Book>()
                 .HasData(new Book
                 {
@@ -67,7 +69,7 @@ namespace DAL
                     Id = 2,
                     Issn = "12345631",
                     Price = 40,
-                    PublishDate = new DateTime(1990,1,1),
+                    PublishDate = new DateTime(1990, 1, 1),
                     PublisherId = 1,
                     Title = "journal",
                     IssueNum = 1

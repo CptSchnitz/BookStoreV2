@@ -1,5 +1,4 @@
-﻿using CommonServiceLocator;
-using DAL;
+﻿using DAL;
 using DAL.BookStoreRepository;
 using DAL.EfBookStoreRepository;
 using GalaSoft.MvvmLight.Ioc;
@@ -21,12 +20,15 @@ namespace WPF
     /// </summary>
     public partial class App : Application
     {
+        private const string configPath = "appsettings.json";
+
         public IConfiguration Configuration { get; private set; }
         protected override void OnStartup(StartupEventArgs e)
         {
+            // Loading the configuration from file
             var configBuilder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                .AddJsonFile(configPath, optional: false, reloadOnChange: true);
             Configuration = configBuilder.Build();
 
             ConfigureServices();
@@ -35,6 +37,7 @@ namespace WPF
             base.OnStartup(e);
         }
 
+        // Configures and registers a logger based on the configuration
         private void ConfigureLogger()
         {
             var logger = new LoggerConfiguration()
@@ -43,6 +46,7 @@ namespace WPF
             SimpleIoc.Default.Register<ILogger>(() => logger);
         }
 
+        // adds all the pages to the navigation service and registers it
         private void SetupNavigation()
         {
             var navigationService = new FrameNavigationService();
@@ -58,6 +62,7 @@ namespace WPF
             SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
         }
 
+        // Registers all the services required by the app
         private void ConfigureServices()
         {
             SetDbContext();
@@ -87,6 +92,7 @@ namespace WPF
 
         }
 
+        // configures the dbcontext with the connection string from config
         private void SetDbContext()
         {
             var connectionString = Configuration.GetConnectionString("SqlConnection");

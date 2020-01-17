@@ -3,7 +3,6 @@ using DAL.BookStoreRepository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,6 +32,7 @@ namespace DAL.EfBookStoreRepository
 
             var bookToEdit = await GetBookByIdAsync(book.Id);
             context.Entry(bookToEdit).CurrentValues.SetValues(bookToEdit);
+
             await context.SaveChangesAsync();
             return bookToEdit;
         }

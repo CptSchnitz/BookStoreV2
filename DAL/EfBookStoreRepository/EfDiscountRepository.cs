@@ -3,9 +3,7 @@ using DAL.BookStoreRepository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DAL.EfBookStoreRepository
@@ -24,13 +22,14 @@ namespace DAL.EfBookStoreRepository
 
             var newDiscount = await context.AddAsync(discount);
             await context.SaveChangesAsync();
+
+            // this way we make sure that next time the discount is loaded its fresh from db and not cached
             newDiscount.State = EntityState.Detached;
             return newDiscount.Entity;
         }
 
         public Task<IEnumerable<BaseDiscount>> GetDiscountsAsync()
         {
-            //return await context.Discounts.ToListAsync();
             return Task.Run(() => context.Discounts.AsEnumerable());
         }
 

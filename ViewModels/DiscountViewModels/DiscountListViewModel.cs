@@ -4,10 +4,8 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Logic.API;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Text;
 using ViewModels.Services;
 
 namespace ViewModels.DiscountViewModels
@@ -23,6 +21,8 @@ namespace ViewModels.DiscountViewModels
             this.messageService = messageService;
             LoadDiscountsCommand = new RelayCommand(LoadDiscounts);
             RemoveDiscountCommand = new RelayCommand<BaseDiscount>(RemoveDiscount);
+
+            //when a message is received load the discounts from the db
             Messenger.Default.Register<BaseDiscount>(this, (discount) => LoadDiscounts());
         }
 
@@ -51,8 +51,10 @@ namespace ViewModels.DiscountViewModels
             }
         }
 
+        //removes a discount
         public async void RemoveDiscount(BaseDiscount discount)
         {
+            // shows a dialog to confirm if a delete is requested
             if (discount != null && messageService.ShowOkCancelMessage("Delete discount", "Are you sure?"))
             {
                 try

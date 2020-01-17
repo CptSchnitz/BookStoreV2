@@ -4,6 +4,7 @@ using ViewModels.ItemsViewModels;
 
 namespace ViewModels
 {
+    // locators that registers all the view models and exposes them for use in views
     public class ViewModelLocator
     {
         public ViewModelLocator()

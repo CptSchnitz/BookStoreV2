@@ -1,19 +1,13 @@
 ﻿using Common.Model;
-using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using Logic.API;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Text;
-using System.Threading;
 
 namespace ViewModels
 {
+    // View Model for creating genres
     public class GenreFormViewModel : ValidationViewModelBase
     {
         IGenreService genreService;
@@ -39,6 +33,8 @@ namespace ViewModels
                     Name = Name
                 };
                 var newGenre = await genreService.AddGenreAsync(genre);
+
+                // sends a message with the new genre
                 Messenger.Default.Send<Genre>(newGenre);
                 ErrorMsg = null;
                 CleanForm();
@@ -53,6 +49,7 @@ namespace ViewModels
             }
         }
 
+        //reset the form
         private void CleanForm()
         {
             Name = null;

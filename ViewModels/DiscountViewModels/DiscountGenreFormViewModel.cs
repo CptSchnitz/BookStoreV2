@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Common.Model;
+using GalaSoft.MvvmLight.Command;
+using Logic.API;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
-using System.Text;
-using Common.Model;
-using GalaSoft.MvvmLight.Command;
-using Logic.API;
 
 namespace ViewModels.DiscountViewModels
 {
+    // view model for creating genre discount
     public class DiscountGenreFormViewModel : DiscountFormBaseViewModel
     {
         IGenreService genreService;
@@ -19,6 +17,7 @@ namespace ViewModels.DiscountViewModels
             LoadGenresCommand = new RelayCommand(LoadGenres);
         }
 
+        //command for loading the genres
         public RelayCommand LoadGenresCommand { get; private set; }
         public ObservableCollection<Genre> GenreList { get; set; }
         public Genre SelectedGenre { get; set; }
@@ -39,6 +38,8 @@ namespace ViewModels.DiscountViewModels
             {
                 RaisePropertyChanged(nameof(ErrorMsg));
             }
+
+            //sets a starting selected genre
             SelectedGenre = GenreList.FirstOrDefault();
             RaisePropertyChanged(nameof(SelectedGenre));
         }

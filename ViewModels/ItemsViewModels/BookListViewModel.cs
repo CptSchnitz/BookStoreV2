@@ -1,17 +1,14 @@
 ﻿using Common.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Views;
 using Logic.API;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Text;
 using ViewModels.Services;
 
 namespace ViewModels.ItemsViewModels
 {
+    //  view model to show all the books
     public class BookListViewModel : ViewModelBase
     {
         IBookService bookService;
@@ -26,11 +23,13 @@ namespace ViewModels.ItemsViewModels
 
         public string ErrorMsg { get; set; }
 
+        // command to edit books
         public RelayCommand<Book> EditBookCommand { get; private set; }
+        //command to load books
         public RelayCommand LoadBooksCommand { get; private set; }
         public ObservableCollection<Book> BookList { get; set; }
 
-
+        // go to the book edit page, and supplies the book to edit as a parameter
         private void NavToEdit(Book book)
         {
             navService.NavigateTo("Book", book);

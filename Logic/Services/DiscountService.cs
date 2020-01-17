@@ -2,11 +2,9 @@
 using DAL.BookStoreRepository;
 using Logic.API;
 using Serilog;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Logic.Services
@@ -24,8 +22,11 @@ namespace Logic.Services
             try
             {
                 var previousDiscount = (await discountRepo.GetDiscountsAsync()).FirstOrDefault(d => d.IsSameDiscount(discount));
+
+                // remove the old discount with the same value
                 if (previousDiscount != null)
                     await discountRepo.RemoveDiscount(previousDiscount.Id);
+
                 return await discountRepo.AddDiscountAsync(discount);
             }
             catch (DataException e)
@@ -61,12 +62,14 @@ namespace Logic.Services
             }
         }
 
+        // set the price after discount for item
         public async Task SetItemPriceAsync(AbstractItem item)
         {
             var discountList = await GetDiscountsAsync();
             SetItemPrice(item, discountList);
         }
 
+        // set the price after discount for item enumerable
         public async Task SetItemsPricesAsync(IEnumerable<AbstractItem> itemList)
         {
             var discountList = await GetDiscountsAsync();
@@ -78,10 +81,15 @@ namespace Logic.Services
 
         private void SetItemPrice(AbstractItem item, List<BaseDiscount> discountList)
         {
+            // gets a list with all the discounts that are applicable for the item
             var discounts = discountList.Where(d => d.IsDiscountValid(item)).ToList();
+            
+            // checks if there is any discount
             if (discounts.Count > 0)
             {
+                // finds the highest discount
                 var discount = discounts.Aggregate(discounts.First(), (maxD, d) => d.DiscountAmount > maxD.DiscountAmount ? d : maxD);
+
                 item.DiscountedPrice = item.Price * discount.DiscountMulti;
                 item.DiscountType = discount.Discriminator;
             }

@@ -1,14 +1,12 @@
 ﻿using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Logic.Services
 {
+    // the base for all the services. injects the logger service.
     public abstract class ServiceBase
     {
         protected readonly ILogger logger;
-        public ServiceBase(ILogger logger)
+        protected ServiceBase(ILogger logger)
         {
             this.logger = logger;
         }

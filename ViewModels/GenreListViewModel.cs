@@ -1,17 +1,14 @@
 ﻿using Common.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using Logic.API;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
-using System.Text;
 
 namespace ViewModels
 {
+    // view model to display all genres
     public class GenreListViewModel : ViewModelBase
     {
         IGenreService genreService;
@@ -19,6 +16,8 @@ namespace ViewModels
         {
             this.genreService = genreService;
             LoadGenresCommand = new RelayCommand(LoadGenres);
+
+            // adds new genres to the list
             Messenger.Default.Register<Genre>(this, (genre) => GenreList.Add(genre));
         }
 

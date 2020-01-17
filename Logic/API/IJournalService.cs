@@ -1,11 +1,10 @@
 ﻿using Common.Model;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Logic.API
 {
+    // service for journal operations
     public interface IJournalService
     {
         Task<List<Journal>> GetJournalsAsync();
