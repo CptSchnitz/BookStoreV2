@@ -39,11 +39,13 @@ namespace ViewModels.ItemsViewModels
         private ObservableCollection<Genre> genreList;
         private string errorMsg;
         private List<Genre> selectedGenres;
+        private string amountInStock;
         #endregion
 
         private Book bookToEdit;
+
         public BookPageViewModel(IAuthorService authorService, IPublisherService publisherService,
-            IGenreService genreService, IBookService bookService, IFrameNavigationService navService, IMessageBoxService messageService)
+IGenreService genreService, IBookService bookService, IFrameNavigationService navService, IMessageBoxService messageService)
         {
             this.authorService = authorService;
             this.publisherService = publisherService;
@@ -80,6 +82,10 @@ namespace ViewModels.ItemsViewModels
         public string Edition { get => edition; set => Set(ref edition, value); }
 
         [Required]
+        [Range(0, 1000)]
+        public string AmountInStock { get => amountInStock; set => Set( ref amountInStock, value); }
+        [Required]
+        [MaxLength(20)]
         public string Isbn { get => isbn; set => Set(ref isbn, value); }
 
         [MaxLength(200)]
@@ -136,6 +142,7 @@ namespace ViewModels.ItemsViewModels
             Edition = bookToEdit.Edition.ToString();
             Description = bookToEdit.Description;
             PublishDate = bookToEdit.PublishDate;
+            AmountInStock = bookToEdit.AmountInStock.ToString();
             Isbn = bookToEdit.Isbn;
             List<int> genresId = bookToEdit.ItemGenres.Select(ig => ig.GenreId).ToList();
             SelectedGenres = genreList.Where(g => genresId.Contains(g.Id)).ToList();
@@ -155,6 +162,7 @@ namespace ViewModels.ItemsViewModels
                     Edition = int.Parse(edition),
                     Description = description,
                     Price = decimal.Parse(price),
+                    AmountInStock = int.Parse(amountInStock),
                     Isbn = isbn,
                     PublisherId = publisher.Id,
                     PublishDate = publishDate,
@@ -198,6 +206,7 @@ namespace ViewModels.ItemsViewModels
             Description = string.Empty;
             Isbn = string.Empty;
             SelectedGenres = null;
+            AmountInStock = string.Empty;
             RaisePropertyChanged(nameof(IsModelValid));
         }
 

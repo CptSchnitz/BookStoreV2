@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
 namespace Common.Model
@@ -13,6 +14,7 @@ namespace Common.Model
         }
 
         [ForeignKey(nameof(Genre))]
+        [Required]
         public int GenreId { get; set; }
         public virtual Genre Genre { get; set; }
         public override bool IsDiscountValid(AbstractItem item)

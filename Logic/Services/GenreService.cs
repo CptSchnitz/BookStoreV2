@@ -3,6 +3,7 @@ using DAL.BookStoreRepository;
 using Logic.API;
 using Serilog;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +20,14 @@ namespace Logic.Services
 
         public async Task<Genre> AddGenreAsync(Genre genre)
         {
+            if (genre is null)
+            {
+                throw new System.ArgumentNullException(nameof(genre));
+            }
+
+            Validator.ValidateObject(genre, new ValidationContext(genre));
+
+
             try
             {
                 var newGenre = await genreRepository.CreateGenreAsync(genre);

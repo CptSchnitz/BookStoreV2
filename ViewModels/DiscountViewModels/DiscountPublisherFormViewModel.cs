@@ -46,7 +46,7 @@ namespace ViewModels.DiscountViewModels
 
         public override void AddDiscount()
         {
-            AddDiscount(new PublisherDiscount(int.Parse(DiscountAmount), SelectedPublisher));
+            AddDiscount(new PublisherDiscount(SelectedPublisher, int.Parse(DiscountAmount)));
         }
     }
 }

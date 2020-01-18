@@ -22,6 +22,8 @@
             <TextBox Text="{Binding Price, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Style="{StaticResource TextBoxInError}"/>
             <TextBlock Text="Edition"/>
             <TextBox Text="{Binding Edition, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Style="{StaticResource TextBoxInError}"/>
+            <TextBlock Text="Amount in stock"/>
+            <TextBox Text="{Binding AmountInStock, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Style="{StaticResource TextBoxInError}"/>
             <TextBlock Text="Publish Date"/>
             <DatePicker SelectedDate="{Binding PublishDate, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}"  Validation.ErrorTemplate="{StaticResource ValidationTemplate}"/>
             <TextBlock Text="ISBN"/>

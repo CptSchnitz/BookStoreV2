@@ -3,6 +3,7 @@ using DAL.BookStoreRepository;
 using Logic.API;
 using Serilog;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,13 +13,21 @@ namespace Logic.Services
     public class DiscountService : ServiceBase, IDiscountService
     {
         IDiscountRepository discountRepo;
-        public DiscountService(ILogger logger, IDiscountRepository discountRepo) : base(logger)
+        public DiscountService(IDiscountRepository discountRepo, ILogger logger) : base(logger)
         {
             this.discountRepo = discountRepo;
         }
 
         public async Task<BaseDiscount> AddDiscountAsync(BaseDiscount discount)
         {
+            if (discount is null)
+            {
+                throw new System.ArgumentNullException(nameof(discount));
+            }
+
+            Validator.ValidateObject(discount, new ValidationContext(discount));
+
+
             try
             {
                 var previousDiscount = (await discountRepo.GetDiscountsAsync()).FirstOrDefault(d => d.IsSameDiscount(discount));
@@ -51,6 +60,11 @@ namespace Logic.Services
 
         public async Task RemoveDiscountAsync(BaseDiscount discount)
         {
+            if (discount is null)
+            {
+                throw new System.ArgumentNullException(nameof(discount));
+            }
+
             try
             {
                 await discountRepo.RemoveDiscount(discount.Id);
@@ -62,16 +76,14 @@ namespace Logic.Services
             }
         }
 
-        // set the price after discount for item
-        public async Task SetItemPriceAsync(AbstractItem item)
-        {
-            var discountList = await GetDiscountsAsync();
-            SetItemPrice(item, discountList);
-        }
-
         // set the price after discount for item enumerable
         public async Task SetItemsPricesAsync(IEnumerable<AbstractItem> itemList)
         {
+            if (itemList is null)
+            {
+                throw new System.ArgumentNullException(nameof(itemList));
+            }
+
             var discountList = await GetDiscountsAsync();
             foreach (var item in itemList)
             {

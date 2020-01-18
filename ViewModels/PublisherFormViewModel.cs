@@ -19,11 +19,11 @@ namespace ViewModels
 
         #region ModelProps
         [Required(AllowEmptyStrings = false, ErrorMessage = "Name is required")]
-        [MaxLength(30, ErrorMessage = "The name is too long")]
+        [MaxLength(50, ErrorMessage = "The name is too long")]
         public string Name { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Email is required")]
-        [MaxLength(80, ErrorMessage = "The email is too long")]
+        [MaxLength(200, ErrorMessage = "The email is too long")]
         [EmailAddress]
         public string ContactEmail { get; set; } 
         #endregion

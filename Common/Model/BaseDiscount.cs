@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Common.Model
 {
@@ -11,6 +13,8 @@ namespace Common.Model
         {
             DiscountAmount = amount;
         }
+        [Required]
+        [Range(1,99)]
         public int DiscountAmount { get; set; }
 
         public string Discriminator { get; set; }
@@ -20,5 +24,10 @@ namespace Common.Model
         // every discount needs to overide this method so you can check if discount is applicable
         public abstract bool IsDiscountValid(AbstractItem item);
         public abstract bool IsSameDiscount(BaseDiscount other);
+
+        public object Last()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

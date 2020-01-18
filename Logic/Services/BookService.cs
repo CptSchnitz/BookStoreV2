@@ -2,7 +2,9 @@
 using DAL.BookStoreRepository;
 using Logic.API;
 using Serilog;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,6 +23,13 @@ namespace Logic.Services
 
         public async Task<Book> AddBookAsync(Book book)
         {
+            if (book is null)
+            {
+                throw new ArgumentNullException(nameof(book));
+            }
+
+            Validator.ValidateObject(book, new ValidationContext(book));
+
             try
             {
                 var newBook = await bookRepository.CreateBookAsync(book);
@@ -54,6 +63,17 @@ namespace Logic.Services
 
         public async Task<Book> UpdateBookAsync(Book book)
         {
+            if (book is null)
+            {
+                throw new ArgumentNullException(nameof(book));
+            }
+
+            var bookFromDb = await bookRepository.GetBookByIdAsync(book.Id);
+            if (bookFromDb == null)
+                throw new ArgumentException("No such book was found");
+
+            Validator.ValidateObject(book, new ValidationContext(book));
+
             try
             {
                 var newBook = await bookRepository.EditBookAsync(book);

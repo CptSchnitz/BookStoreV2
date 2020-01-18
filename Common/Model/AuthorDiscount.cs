@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Common.Model
 {
@@ -8,10 +9,16 @@ namespace Common.Model
         protected AuthorDiscount() { }
         public AuthorDiscount(Author author, int amount) : base(amount)
         {
+            if (author is null)
+            {
+                throw new System.ArgumentNullException(nameof(author));
+            }
+
             AuthorId = author.Id;
         }
 
         [ForeignKey(nameof(Author))]
+        [Required]
         public int AuthorId { get; set; }
         public virtual Author Author { get; set; }
 

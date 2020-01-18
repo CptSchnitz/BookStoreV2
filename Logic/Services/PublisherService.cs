@@ -3,6 +3,7 @@ using DAL.BookStoreRepository;
 using Logic.API;
 using Serilog;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +20,13 @@ namespace Logic.Services
 
         public async Task<Publisher> AddPublisherAsync(Publisher publisher)
         {
+            if (publisher is null)
+            {
+                throw new System.ArgumentNullException(nameof(publisher));
+            }
+
+            Validator.ValidateObject(publisher, new ValidationContext(publisher));
+
             try
             {
                 var newPublisher = await publisherRepository.CreatePublisherAsync(publisher);

@@ -20,6 +20,9 @@
             <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Style="{StaticResource TextBoxInError}"/>
             <TextBlock Text="Price"/>
             <TextBox Text="{Binding Price, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Style="{StaticResource TextBoxInError}"/>
+            <TextBlock Text="Amount in stock"/>
+            <TextBox Text="{Binding AmountInStock, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Style="{StaticResource TextBoxInError}"/>
+
             <TextBlock Text="Issue number"/>
             <TextBox Text="{Binding IssueNum, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Validation.ErrorTemplate="{StaticResource ValidationTemplate}" Style="{StaticResource TextBoxInError}"/>
             <TextBlock Text="Publish Date"/>

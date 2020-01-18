@@ -16,7 +16,5 @@ namespace Logic.API
         // sets the price after discount for all the items in itelList
         Task SetItemsPricesAsync(IEnumerable<AbstractItem> itemList);
 
-        Task SetItemPriceAsync(AbstractItem item);
-
     }
 }

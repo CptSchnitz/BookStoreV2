@@ -3,6 +3,7 @@ using DAL.BookStoreRepository;
 using Logic.API;
 using Serilog;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +20,13 @@ namespace Logic.Services
 
         public async Task<Author> AddAuthorAsync(Author author)
         {
+            if (author is null)
+            {
+                throw new System.ArgumentNullException(nameof(author));
+            }
+
+            Validator.ValidateObject(author,new ValidationContext(author));
+
             try
             {
                 var newAuthor = await authorRepository.CreateAuthorAsync(author);
