@@ -19,6 +19,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/WPF.Common;component/Converters/Converters.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WPF.Common;component/ErrorHandling.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WPF.Common;component/Style.xaml"/>
                 <ResourceDictionary Source="DataTemplates/DataTemplates.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

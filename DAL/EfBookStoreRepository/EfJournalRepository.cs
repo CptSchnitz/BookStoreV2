@@ -31,7 +31,7 @@ namespace DAL.EfBookStoreRepository
                 throw new ArgumentNullException();
 
             var journalToEdit = await GetJournalByIdAsync(journal.Id);
-            context.Entry(journalToEdit).CurrentValues.SetValues(journalToEdit);
+            context.Entry(journalToEdit).CurrentValues.SetValues(journal);
             await context.SaveChangesAsync();
             return journalToEdit;
         }

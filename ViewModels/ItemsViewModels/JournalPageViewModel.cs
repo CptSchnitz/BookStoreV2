@@ -137,17 +137,7 @@ IGenreService genreService, IFrameNavigationService navService, IMessageBoxServi
             try
             {
                 //create new journal
-                var journal = new Journal
-                {
-                    Title = Title,
-                    Price = decimal.Parse(price),
-                    Issn = issn,
-                    AmountInStock = int.Parse(amountInStock),
-                    IssueNum = int.Parse(issueNum),
-                    PublisherId = publisher.Id,
-                    PublishDate = publishDate,
-                    ItemGenres = selectedGenres.Select(genre => new ItemGenre { GenreId = genre.Id }).ToList()
-                };
+                Journal journal = CreateJournal();
                 string msg;
 
                 // calls the correct journal service command based if edit or new journal
@@ -172,6 +162,21 @@ IGenreService genreService, IFrameNavigationService navService, IMessageBoxServi
             {
                 ErrorMsg = e.Message;
             }
+        }
+
+        private Journal CreateJournal()
+        {
+            return new Journal
+            {
+                Title = Title,
+                Price = decimal.Parse(price),
+                Issn = issn,
+                AmountInStock = int.Parse(amountInStock),
+                IssueNum = int.Parse(issueNum),
+                PublisherId = publisher.Id,
+                PublishDate = publishDate,
+                ItemGenres = selectedGenres.Select(genre => new ItemGenre { GenreId = genre.Id }).ToList()
+            };
         }
 
         // sets all the model properties to empty.

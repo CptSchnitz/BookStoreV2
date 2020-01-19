@@ -17,6 +17,7 @@ namespace DAL.EfBookStoreRepository
         public async Task<AbstractItem> GetAbstractItemByIdAsync(int id)
         {
             return await context.Items
+                .Include(i => i.Publisher)
                 .Include(i => i.ItemGenres)
                 .ThenInclude(ig => ig.Genre)
                 .SingleOrDefaultAsync(i => i.Id == id);
@@ -25,6 +26,7 @@ namespace DAL.EfBookStoreRepository
         public Task<IEnumerable<AbstractItem>> GetAbstractItemsAsync()
         {
             return Task.Run(() => context.Items.Include(i => i.Publisher)
+                .Include(i => i.Publisher)
                 .Include(i => i.ItemGenres)
                 .ThenInclude(ig => ig.Genre).AsEnumerable());
         }

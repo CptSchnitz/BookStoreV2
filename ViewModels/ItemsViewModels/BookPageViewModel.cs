@@ -155,19 +155,7 @@ IGenreService genreService, IBookService bookService, IFrameNavigationService na
             try
             {
                 //create a new book.
-                var book = new Book
-                {
-                    Title = Title,
-                    AuthorId = author.Id,
-                    Edition = int.Parse(edition),
-                    Description = description,
-                    Price = decimal.Parse(price),
-                    AmountInStock = int.Parse(amountInStock),
-                    Isbn = isbn,
-                    PublisherId = publisher.Id,
-                    PublishDate = publishDate,
-                    ItemGenres = selectedGenres.Select(genre => new ItemGenre { GenreId = genre.Id }).ToList()
-                };
+                Book book = CreateBook();
 
                 string msg;
 
@@ -193,6 +181,23 @@ IGenreService genreService, IBookService bookService, IFrameNavigationService na
             {
                 ErrorMsg = e.Message;
             }
+        }
+
+        private Book CreateBook()
+        {
+            return new Book
+            {
+                Title = Title,
+                AuthorId = author.Id,
+                Edition = int.Parse(edition),
+                Description = description,
+                Price = decimal.Parse(price),
+                AmountInStock = int.Parse(amountInStock),
+                Isbn = isbn,
+                PublisherId = publisher.Id,
+                PublishDate = publishDate,
+                ItemGenres = selectedGenres.Select(genre => new ItemGenre { GenreId = genre.Id }).ToList()
+            };
         }
 
         // sets all the model propeties to null

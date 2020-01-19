@@ -10,19 +10,19 @@
         DataContext="{Binding Main ,Source={StaticResource Locator}}">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Book">
-                <MenuItem Header="All Books" Command="{Binding BookListNavCommand}"/>
-                <MenuItem Header="New Book" Command="{Binding BookEditNavCommand}"/>
+            <MenuItem Header="Book" Style="{StaticResource MenuItemLightTheme}">
+                <MenuItem Header="All Books" Command="{Binding BookListNavCommand}" Style="{StaticResource MenuItemLightTheme}"/>
+                <MenuItem Header="New Book" Command="{Binding BookEditNavCommand}" Style="{StaticResource MenuItemLightTheme}"/>
             </MenuItem>
-            <MenuItem Header="Journal">
-                <MenuItem Header="All Journals" Command="{Binding JournalListNavCommand}"/>
-                <MenuItem Header="New Journal" Command="{Binding JournalEditNavCommand}"/>
+            <MenuItem Header="Journal" Style="{StaticResource MenuItemLightTheme}">
+                <MenuItem Header="All Journals" Command="{Binding JournalListNavCommand}" Style="{StaticResource MenuItemLightTheme}"/>
+                <MenuItem Header="New Journal" Command="{Binding JournalEditNavCommand}" Style="{StaticResource MenuItemLightTheme}"/>
             </MenuItem>
-            <MenuItem Header="Discounts" Command="{Binding DiscountNavCommand}"/>
-            <MenuItem Header="Genres" Command="{Binding GenreNavCommand}"/>
-            <MenuItem Header="Authors" Command="{Binding AuthorNavCommand}"/>
-            <MenuItem Header="Publishers" Command="{Binding PublisherNavCommand}"/>
-            <MenuItem Header="Logs" Command="{Binding OpenLogFolderCommand}"/>
+            <MenuItem Header="Discounts" Command="{Binding DiscountNavCommand}" Style="{StaticResource MenuItemLightTheme}"/>
+            <MenuItem Header="Genres" Command="{Binding GenreNavCommand}" Style="{StaticResource MenuItemLightTheme}"/>
+            <MenuItem Header="Authors" Command="{Binding AuthorNavCommand}" Style="{StaticResource MenuItemLightTheme}"/>
+            <MenuItem Header="Publishers" Command="{Binding PublisherNavCommand}" Style="{StaticResource MenuItemLightTheme}"/>
+            <MenuItem Header="Logs" Command="{Binding OpenLogFolderCommand}" Style="{StaticResource MenuItemLightTheme}"/>
         </Menu>
         <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"  >
             <i:Interaction.Triggers>
