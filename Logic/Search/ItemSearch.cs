@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Logic.Services
+namespace Logic.Search
 {
-    public class ItemSearch
+    public class ItemSearch : IItemSearch
     {
         internal Dictionary<string, SearchFunc> dictionary;
         private string title;

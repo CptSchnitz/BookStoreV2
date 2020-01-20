@@ -18,6 +18,7 @@
                 <MenuItem Header="All Journals" Command="{Binding JournalListNavCommand}" Style="{StaticResource MenuItemLightTheme}"/>
                 <MenuItem Header="New Journal" Command="{Binding JournalEditNavCommand}" Style="{StaticResource MenuItemLightTheme}"/>
             </MenuItem>
+            <MenuItem Header="Search" Command="{Binding SearchNavCommand}" Style="{StaticResource MenuItemLightTheme}"/>
             <MenuItem Header="Discounts" Command="{Binding DiscountNavCommand}" Style="{StaticResource MenuItemLightTheme}"/>
             <MenuItem Header="Genres" Command="{Binding GenreNavCommand}" Style="{StaticResource MenuItemLightTheme}"/>
             <MenuItem Header="Authors" Command="{Binding AuthorNavCommand}" Style="{StaticResource MenuItemLightTheme}"/>

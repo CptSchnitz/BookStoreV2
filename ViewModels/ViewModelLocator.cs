@@ -31,6 +31,9 @@ namespace ViewModels
             SimpleIoc.Default.Register<DiscountGenreFormViewModel>();
             SimpleIoc.Default.Register<DiscountDateFormViewModel>();
             SimpleIoc.Default.Register<DiscountPublisherFormViewModel>();
+
+            SimpleIoc.Default.Register<SearchFormViewModel>();
+            SimpleIoc.Default.Register<SearchListViewModel>();
         }
 
         public MainWindowViewModel Main => SimpleIoc.Default.GetInstance<MainWindowViewModel>();
@@ -49,5 +52,8 @@ namespace ViewModels
         public DiscountGenreFormViewModel DiscountGenre => SimpleIoc.Default.GetInstance<DiscountGenreFormViewModel>();
         public DiscountDateFormViewModel DiscountDate => SimpleIoc.Default.GetInstance<DiscountDateFormViewModel>();
         public DiscountPublisherFormViewModel DiscountPublisher => SimpleIoc.Default.GetInstance<DiscountPublisherFormViewModel>();
+
+        public SearchFormViewModel SearchForm => SimpleIoc.Default.GetInstance<SearchFormViewModel>();
+        public SearchListViewModel SearchList => SimpleIoc.Default.GetInstance<SearchListViewModel>();
     }
 }

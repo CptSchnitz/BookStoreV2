@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Logic.Services
+namespace Logic.Search
 {
     static class SearchFuncs
     {

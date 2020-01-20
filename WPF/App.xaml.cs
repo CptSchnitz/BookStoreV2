@@ -59,6 +59,7 @@ namespace WPF
             navigationService.Configure("Genre", new Uri("./Views/GenrePage.xaml", UriKind.Relative));
             navigationService.Configure("Home", new Uri("./Views/HomePage.xaml", UriKind.Relative));
             navigationService.Configure("Discount", new Uri("./Views/DiscountPage.xaml", UriKind.Relative));
+            navigationService.Configure("Search", new Uri("./Views/SearchPage.xaml", UriKind.Relative));
             SimpleIoc.Default.Register<IFrameNavigationService>(() => navigationService);
         }
 
@@ -89,6 +90,9 @@ namespace WPF
 
             SimpleIoc.Default.Register<IDiscountService, DiscountService>();
             SimpleIoc.Default.Register<IDiscountRepository, EfDiscountRepository>();
+
+            SimpleIoc.Default.Register<ISearchService, SearchService>();
+            SimpleIoc.Default.Register<IItemRepository, EfItemRepository>();
 
         }
 

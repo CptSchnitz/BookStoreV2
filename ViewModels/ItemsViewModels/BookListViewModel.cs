@@ -13,6 +13,8 @@ namespace ViewModels.ItemsViewModels
     {
         IBookService bookService;
         IFrameNavigationService navService;
+        private string errorMsg;
+
         public BookListViewModel(IBookService bookService, IFrameNavigationService navService)
         {
             this.bookService = bookService;
@@ -21,7 +23,7 @@ namespace ViewModels.ItemsViewModels
             EditBookCommand = new RelayCommand<Book>(NavToEdit);
         }
 
-        public string ErrorMsg { get; set; }
+        public string ErrorMsg { get => errorMsg; set => Set(ref errorMsg,value); }
 
         // command to edit books
         public RelayCommand<Book> EditBookCommand { get; private set; }
@@ -46,10 +48,6 @@ namespace ViewModels.ItemsViewModels
             catch (DataException e)
             {
                 ErrorMsg = e.Message;
-            }
-            finally
-            {
-                RaisePropertyChanged(nameof(ErrorMsg));
             }
         }
     }

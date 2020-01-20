@@ -1,0 +1,95 @@
+﻿<UserControl x:Class="WPF.UserControls.SearchForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             DataContext="{Binding SearchForm, Source={StaticResource Locator}}">
+    <UserControl.Resources>
+        <Style TargetType="StackPanel">
+            <Setter Property="Orientation" Value="Horizontal"/>
+        </Style>
+        <Style TargetType="Border">
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Width" Value="150"/>
+        </Style>
+        <Style x:Key="SmallBox" TargetType="TextBox">
+            <Setter Property="Width" Value="50"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border Grid.Row="0" Grid.Column="0">
+            <StackPanel >
+                <TextBlock Text="Title"/>
+                <TextBox Text="{Binding Search.Title, TargetNullValue=''}"/>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="0" Grid.Column="1">
+            <StackPanel >
+                <TextBlock Text="Publisher Name"/>
+                <TextBox Text="{Binding Search.PublisherName, TargetNullValue=''}"/>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="0" Grid.Column="2">
+            <StackPanel >
+                <TextBlock Text="Genre"/>
+                <TextBox Text="{Binding Search.Genre, TargetNullValue=''}"/>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="1" Grid.Column="0">
+            <StackPanel >
+                <TextBlock Text="Discount Type"/>
+                <TextBox Text="{Binding Search.DiscountType, TargetNullValue=''}"/>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="1" Grid.Column="1">
+            <StackPanel >
+                <TextBlock Text="Min Price" />
+                <TextBox Text="{Binding Search.MinPrice, TargetNullValue=''}" Style="{StaticResource SmallBox}"/>
+                <TextBlock Text="Max Price"/>
+                <TextBox Text="{Binding Search.MaxPrice, TargetNullValue=''}" Style="{StaticResource SmallBox}"/>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="1" Grid.Column="2">
+            <StackPanel >
+                <TextBlock Text="Min Discount" />
+                <TextBox Text="{Binding Search.MinDiscountedPrice, TargetNullValue=''}" Style="{StaticResource SmallBox}"/>
+                <TextBlock Text="Max Discount"/>
+                <TextBox Text="{Binding Search.MaxDiscountedPrice, TargetNullValue=''}" Style="{StaticResource SmallBox}"/>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="2" Grid.Column="0">
+            <StackPanel >
+                <TextBlock Text="Min Amount" />
+                <TextBox Text="{Binding Search.MinAmountInStock, TargetNullValue=''}" Style="{StaticResource SmallBox}"/>
+                <TextBlock Text="Max Amount"/>
+                <TextBox Text="{Binding Search.MaxAmountInStock, TargetNullValue=''}" Style="{StaticResource SmallBox}"/>
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
+            <StackPanel >
+                <TextBlock Text="Min Date" />
+                <TextBox Text="{Binding Search.StartPublishDate, TargetNullValue='', Converter={StaticResource NullableDateConverter}}" Width="100"/>
+                <TextBlock Text="Max Date"/>
+                <TextBox Text="{Binding Search.EndPublishDate, TargetNullValue='', Converter={StaticResource NullableDateConverter}}" Width="100"/>
+            </StackPanel>
+        </Border>
+
+        <Button Grid.Row="3" Grid.ColumnSpan="3" Content="Search" Command="{Binding SubmitSearchCommand}"/>
+    </Grid>
+</UserControl>
